@@ -3,9 +3,17 @@
 import Link from "next/link";
 import { useParams, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import { getChallenge, addSubmission, getSeekerName, mySubmissions } from "@/lib/store";
+import {
+  getChallenge,
+  addSubmission,
+  getSeekerName,
+  mySubmissions,
+  recordActivity,
+  getStreak,
+} from "@/lib/store";
 import { FieldBadge, Chip, Spinner, scoreColor } from "@/components/ui";
 import VideoRecorder from "@/components/VideoRecorder";
+import { caseXp, badgesFor, type Badge } from "@/lib/gamification";
 import type { AiFeedback, Challenge, Submission } from "@/lib/types";
 
 export default function ChallengePage() {
@@ -21,6 +29,8 @@ export default function ChallengePage() {
   const [submitting, setSubmitting] = useState(false);
   const [feedback, setFeedback] = useState<AiFeedback | null>(null);
   const [done, setDone] = useState(false);
+  const [xpEarned, setXpEarned] = useState(0);
+  const [unlocked, setUnlocked] = useState<Badge[]>([]);
 
   useEffect(() => {
     setChallenge(getChallenge(params.id));
@@ -31,6 +41,7 @@ export default function ChallengePage() {
   async function submit() {
     if (!challenge || !writeup.trim() || submitting) return;
     setSubmitting(true);
+    const prevBadges = badgesFor(mySubmissions(), getChallenge, getStreak());
     const linkArr = links
       .split(/[\n,]/)
       .map((l) => l.trim())
@@ -46,6 +57,10 @@ export default function ChallengePage() {
       status: "submitted",
     };
     addSubmission(sub);
+    recordActivity();
+    setXpEarned(caseXp(sub, challenge));
+    const after = badgesFor(mySubmissions(), getChallenge, getStreak());
+    setUnlocked(after.filter((b) => b.earned && !prevBadges.find((p) => p.id === b.id)?.earned));
     setDone(true);
     setSubmitting(false);
     try {
@@ -122,7 +137,12 @@ export default function ChallengePage() {
         {/* Submit panel — video first */}
         <aside>
           {done ? (
-            <SubmittedPanel feedback={feedback} onMyWork={() => router.push("/me")} />
+            <SubmittedPanel
+              feedback={feedback}
+              onMyWork={() => router.push("/me")}
+              xpEarned={xpEarned}
+              unlocked={unlocked}
+            />
           ) : already ? (
             <div className="rounded-2xl border border-emerald-500/20 bg-emerald-500/[0.06] p-5 text-center">
               <p className="font-semibold text-emerald-700 dark:text-emerald-300">
@@ -195,9 +215,13 @@ export default function ChallengePage() {
 function SubmittedPanel({
   feedback,
   onMyWork,
+  xpEarned,
+  unlocked,
 }: {
   feedback: AiFeedback | null;
   onMyWork: () => void;
+  xpEarned: number;
+  unlocked: Badge[];
 }) {
   return (
     <div className="rounded-2xl border border-line bg-surface p-5">
@@ -208,6 +232,20 @@ function SubmittedPanel({
         <h2 className="font-bold">Presented!</h2>
       </div>
       <p className="mt-2 text-sm text-muted">It&apos;s now in the company&apos;s review queue.</p>
+
+      <div className="mt-3 flex flex-wrap items-center gap-2">
+        <span className="rounded-full bg-indigo-500/15 px-3 py-1 text-sm font-bold text-indigo-700 ring-1 ring-indigo-500/30 dark:text-indigo-300">
+          +{xpEarned} XP
+        </span>
+        {unlocked.map((b) => (
+          <span
+            key={b.id}
+            className="rounded-full bg-amber-500/15 px-3 py-1 text-sm font-semibold text-amber-700 ring-1 ring-amber-500/30 dark:text-amber-300"
+          >
+            {b.icon} {b.label} unlocked
+          </span>
+        ))}
+      </div>
 
       {feedback ? (
         <div className="mt-4 rounded-xl border border-indigo-500/20 bg-indigo-500/[0.06] p-4">

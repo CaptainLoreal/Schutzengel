@@ -3,7 +3,15 @@
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import { getRole, setRole, getSeekerName, type Role } from "@/lib/store";
+import {
+  getRole,
+  setRole,
+  getSeekerName,
+  mySubmissions,
+  getChallenge,
+  type Role,
+} from "@/lib/store";
+import { totalXp, rankFor } from "@/lib/gamification";
 import ThemeToggle from "@/components/ThemeToggle";
 
 export default function Nav() {
@@ -12,10 +20,12 @@ export default function Nav() {
   const [role, setRoleState] = useState<Role>("seeker");
   const [live, setLive] = useState<boolean | null>(null);
   const [initial, setInitial] = useState("Y");
+  const [xp, setXp] = useState(0);
 
   useEffect(() => {
     setRoleState(getRole());
     setInitial((getSeekerName()[0] || "Y").toUpperCase());
+    setXp(totalXp(mySubmissions(), getChallenge));
     fetch("/api/status")
       .then((r) => r.json())
       .then((d) => setLive(Boolean(d.live)))
@@ -81,6 +91,14 @@ export default function Nav() {
               {live ? "Live AI" : "Demo"}
             </span>
           )}
+
+          <Link
+            href="/profile"
+            title="Your progress"
+            className="hidden items-center gap-1.5 rounded-full bg-indigo-500/10 px-2.5 py-1 text-xs font-semibold text-indigo-700 ring-1 ring-indigo-500/20 sm:inline-flex dark:text-indigo-300"
+          >
+            ★ {rankFor(xp).name} · {xp} XP
+          </Link>
 
           <ThemeToggle />
 

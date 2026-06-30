@@ -24,11 +24,17 @@ const DEFAULT_PROFILE: Profile = {
   links: [],
 };
 
+export interface Activity {
+  streak: number;
+  lastActiveDay: string | null;
+}
+
 interface DB {
   submissions: Submission[];
   customChallenges: Challenge[];
   role: Role;
   profile: Profile;
+  activity: Activity;
 }
 
 function freshDB(): DB {
@@ -37,6 +43,7 @@ function freshDB(): DB {
     customChallenges: [],
     role: "seeker",
     profile: { ...DEFAULT_PROFILE },
+    activity: { streak: 0, lastActiveDay: null },
   };
 }
 
@@ -55,6 +62,10 @@ export function loadDB(): DB {
       customChallenges: parsed.customChallenges ?? [],
       role: parsed.role ?? "seeker",
       profile: { ...DEFAULT_PROFILE, ...(parsed.profile ?? {}) },
+      activity: {
+        streak: parsed.activity?.streak ?? 0,
+        lastActiveDay: parsed.activity?.lastActiveDay ?? null,
+      },
     };
   } catch {
     return freshDB();
@@ -137,4 +148,33 @@ export function mySubmissions(): Submission[] {
 
 export function allSubmissions(): Submission[] {
   return loadDB().submissions.slice().sort((a, b) => (a.submittedAt < b.submittedAt ? 1 : -1));
+}
+
+function dayKey(d: Date): string {
+  return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(
+    d.getDate(),
+  ).padStart(2, "0")}`;
+}
+
+function diffDays(a: string, b: string): number {
+  const da = new Date(a + "T00:00:00");
+  const db = new Date(b + "T00:00:00");
+  return Math.round((db.getTime() - da.getTime()) / 86_400_000);
+}
+
+export function getStreak(): number {
+  return loadDB().activity.streak;
+}
+
+/** Bumps the daily streak — call once when the user completes a case. */
+export function recordActivity() {
+  const db = loadDB();
+  const today = dayKey(new Date());
+  const last = db.activity.lastActiveDay;
+  if (last === null) db.activity.streak = 1;
+  else if (last !== today) {
+    db.activity.streak = diffDays(last, today) === 1 ? db.activity.streak + 1 : 1;
+  }
+  db.activity.lastActiveDay = today;
+  saveDB(db);
 }

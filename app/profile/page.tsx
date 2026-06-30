@@ -2,26 +2,43 @@
 
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { getProfile, setProfile, mySubmissions, getChallenge, type Profile } from "@/lib/store";
+import {
+  getProfile,
+  setProfile,
+  mySubmissions,
+  getChallenge,
+  getStreak,
+  type Profile,
+} from "@/lib/store";
+import { totalXp, rankFor, levelFor, badgesFor, type Badge } from "@/lib/gamification";
+
+const LEADERBOARD_SEED = [
+  { name: "Priya N.", xp: 1240 },
+  { name: "Marco V.", xp: 980 },
+  { name: "Aisha R.", xp: 760 },
+  { name: "Tomás P.", xp: 540 },
+  { name: "Lena K.", xp: 410 },
+];
 
 export default function ProfilePage() {
   const [mounted, setMounted] = useState(false);
-  const [p, setP] = useState<Profile>({
-    name: "",
-    headline: "",
-    location: "",
-    bio: "",
-    links: [],
-  });
+  const [p, setP] = useState<Profile>({ name: "", headline: "", location: "", bio: "", links: [] });
   const [linksText, setLinksText] = useState("");
   const [saved, setSaved] = useState(false);
   const [stats, setStats] = useState({ completed: 0, wins: 0, types: 0 });
+  const [xp, setXp] = useState(0);
+  const [streak, setStreak] = useState(0);
+  const [badges, setBadges] = useState<Badge[]>([]);
 
   useEffect(() => {
     const prof = getProfile();
     setP(prof);
     setLinksText(prof.links.join("\n"));
     const subs = mySubmissions();
+    const st = getStreak();
+    setStreak(st);
+    setXp(totalXp(subs, getChallenge));
+    setBadges(badgesFor(subs, getChallenge, st));
     setStats({
       completed: subs.length,
       wins: subs.filter((s) => s.status === "hired" || s.status === "shortlisted").length,
@@ -43,6 +60,14 @@ export default function ProfilePage() {
   }
 
   const initial = (p.name?.[0] || "Y").toUpperCase();
+  const rank = rankFor(xp);
+  const level = levelFor(xp);
+  const pct = rank.next === null ? 100 : Math.round(((xp - rank.min) / (rank.next - rank.min)) * 100);
+  const nextRankName = rank.next !== null ? rankFor(rank.next).name : null;
+
+  const board = [...LEADERBOARD_SEED, { name: p.name || "You", xp, you: true }]
+    .sort((a, b) => b.xp - a.xp)
+    .slice(0, 8);
 
   if (!mounted) {
     return <main className="mx-auto max-w-4xl px-5 py-10 text-muted">Loading…</main>;
@@ -52,11 +77,43 @@ export default function ProfilePage() {
     <main className="mx-auto w-full max-w-4xl px-5 py-8">
       <h1 className="text-3xl font-black tracking-tight">Profile</h1>
       <p className="mt-1 text-muted">
-        This is your portable identity — how a company sees you alongside your cases.
+        Your portable identity and career progression — what grows as you complete real cases.
       </p>
 
+      {/* Progress hero */}
+      <div className="mt-6 rounded-2xl border border-line bg-surface p-5">
+        <div className="flex flex-wrap items-end justify-between gap-4">
+          <div>
+            <p className="text-xs uppercase tracking-widest text-faint">Rank · Level {level}</p>
+            <p className="text-2xl font-black text-indigo-600 dark:text-indigo-300">{rank.name}</p>
+          </div>
+          <div className="flex items-center gap-5">
+            <div className="text-right">
+              <p className="text-2xl font-black tabular-nums text-fg">{xp}</p>
+              <p className="text-xs uppercase tracking-widest text-faint">total XP</p>
+            </div>
+            <div className="flex items-center gap-2 rounded-xl border border-line px-3 py-2">
+              <span className="text-2xl">🔥</span>
+              <div>
+                <p className="text-xl font-black tabular-nums text-fg">{streak}</p>
+                <p className="text-[10px] uppercase tracking-widest text-faint">day streak</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div className="mt-4 h-2.5 w-full overflow-hidden rounded-full bg-panel">
+          <div
+            className="h-full rounded-full bg-gradient-to-r from-indigo-500 to-violet-400 transition-all"
+            style={{ width: `${pct}%` }}
+          />
+        </div>
+        <p className="mt-1.5 text-xs text-faint">
+          {nextRankName ? `${rank.next! - xp} XP to ${nextRankName}` : "Top rank reached — Partner."}
+        </p>
+      </div>
+
+      {/* Identity + edit */}
       <div className="mt-6 grid grid-cols-1 gap-6 lg:grid-cols-[1fr_1fr]">
-        {/* Preview */}
         <section>
           <p className="mb-2 text-xs uppercase tracking-widest text-faint">How companies see you</p>
           <div className="rounded-2xl border border-line bg-surface p-5">
@@ -70,9 +127,7 @@ export default function ProfilePage() {
                 {p.location && <p className="text-xs text-faint">📍 {p.location}</p>}
               </div>
             </div>
-
             {p.bio && <p className="mt-4 whitespace-pre-wrap text-sm text-body">{p.bio}</p>}
-
             {p.links.length > 0 && (
               <div className="mt-4 border-t border-line pt-3">
                 <p className="text-xs uppercase tracking-widest text-faint">Links</p>
@@ -85,13 +140,11 @@ export default function ProfilePage() {
                 </ul>
               </div>
             )}
-
             <div className="mt-4 grid grid-cols-3 gap-2 border-t border-line pt-4 text-center">
               <Stat label="Cases" value={stats.completed} />
               <Stat label="Shortlisted / hired" value={stats.wins} />
               <Stat label="Case types" value={stats.types} />
             </div>
-
             <Link
               href="/me"
               className="mt-4 inline-block text-sm font-semibold text-indigo-600 hover:underline dark:text-indigo-300"
@@ -101,35 +154,34 @@ export default function ProfilePage() {
           </div>
         </section>
 
-        {/* Edit form */}
         <section>
           <p className="mb-2 text-xs uppercase tracking-widest text-faint">Edit</p>
           <div className="space-y-4 rounded-2xl border border-line bg-surface p-5">
-            <Field label="Display name">
+            <FieldRow label="Display name">
               <input
                 value={p.name}
                 onChange={(e) => setP({ ...p, name: e.target.value })}
                 className={inputCls}
                 placeholder="Your name"
               />
-            </Field>
-            <Field label="Headline">
+            </FieldRow>
+            <FieldRow label="Headline">
               <input
                 value={p.headline}
                 onChange={(e) => setP({ ...p, headline: e.target.value })}
                 className={inputCls}
                 placeholder="e.g. Aspiring BD analyst · ex-founder"
               />
-            </Field>
-            <Field label="Location">
+            </FieldRow>
+            <FieldRow label="Location">
               <input
                 value={p.location}
                 onChange={(e) => setP({ ...p, location: e.target.value })}
                 className={inputCls}
                 placeholder="e.g. Berlin, Germany"
               />
-            </Field>
-            <Field label="Bio">
+            </FieldRow>
+            <FieldRow label="Bio">
               <textarea
                 value={p.bio}
                 onChange={(e) => setP({ ...p, bio: e.target.value })}
@@ -137,8 +189,8 @@ export default function ProfilePage() {
                 className={inputCls}
                 placeholder="A few lines on who you are and what you're after…"
               />
-            </Field>
-            <Field label="Links (one per line)">
+            </FieldRow>
+            <FieldRow label="Links (one per line)">
               <textarea
                 value={linksText}
                 onChange={(e) => setLinksText(e.target.value)}
@@ -146,7 +198,7 @@ export default function ProfilePage() {
                 className={inputCls}
                 placeholder={"linkedin.com/in/you\nyour-portfolio.com"}
               />
-            </Field>
+            </FieldRow>
             <button
               onClick={save}
               className="rounded-xl bg-indigo-500 px-5 py-2.5 text-sm font-semibold text-white hover:bg-indigo-400"
@@ -156,6 +208,63 @@ export default function ProfilePage() {
           </div>
         </section>
       </div>
+
+      {/* Achievements */}
+      <section className="mt-6">
+        <h2 className="mb-3 text-sm font-semibold uppercase tracking-widest text-faint">
+          Achievements · {badges.filter((b) => b.earned).length}/{badges.length}
+        </h2>
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-4">
+          {badges.map((b) => (
+            <div
+              key={b.id}
+              title={b.desc}
+              className={`rounded-2xl border p-4 text-center transition ${
+                b.earned
+                  ? "border-amber-500/30 bg-amber-500/[0.07]"
+                  : "border-line bg-surface opacity-50 grayscale"
+              }`}
+            >
+              <div className="text-3xl">{b.icon}</div>
+              <p className="mt-1 text-sm font-bold text-fg">{b.label}</p>
+              <p className="mt-0.5 text-xs text-faint">{b.desc}</p>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* Leaderboard */}
+      <section className="mt-6">
+        <h2 className="mb-3 text-sm font-semibold uppercase tracking-widest text-faint">
+          Leaderboard
+        </h2>
+        <div className="rounded-2xl border border-line bg-surface p-3">
+          <ol className="space-y-1">
+            {board.map((row, i) => (
+              <li
+                key={`${row.name}-${i}`}
+                className={`flex items-center justify-between rounded-lg px-3 py-2 text-sm ${
+                  "you" in row && row.you ? "bg-indigo-500/10 ring-1 ring-indigo-500/30" : ""
+                }`}
+              >
+                <span className="flex items-center gap-3">
+                  <span className="w-5 text-right font-bold tabular-nums text-faint">{i + 1}</span>
+                  <span
+                    className={
+                      "you" in row && row.you
+                        ? "font-semibold text-indigo-700 dark:text-indigo-300"
+                        : "text-body"
+                    }
+                  >
+                    {row.name}
+                  </span>
+                </span>
+                <span className="tabular-nums text-muted">{row.xp} XP</span>
+              </li>
+            ))}
+          </ol>
+        </div>
+      </section>
     </main>
   );
 }
@@ -163,7 +272,7 @@ export default function ProfilePage() {
 const inputCls =
   "w-full rounded-xl border border-line bg-input px-3 py-2 text-sm text-fg outline-none placeholder:text-faint focus:border-indigo-400/50";
 
-function Field({ label, children }: { label: string; children: React.ReactNode }) {
+function FieldRow({ label, children }: { label: string; children: React.ReactNode }) {
   return (
     <label className="block">
       <span className="mb-1 block text-xs uppercase tracking-widest text-muted">{label}</span>

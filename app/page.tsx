@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import { allChallenges, mySubmissions } from "@/lib/store";
 import { FIELDS } from "@/lib/fields";
 import { FieldBadge, Chip } from "@/components/ui";
+import { baseXp } from "@/lib/gamification";
 import type { Challenge, Field } from "@/lib/types";
 
 export default function Feed() {
@@ -74,7 +75,12 @@ export default function Feed() {
               </div>
               <div className="mt-4 flex items-center justify-between border-t border-line pt-3 text-xs text-faint">
                 <span>{c.company.name}</span>
-                <span>⏱ {c.effort}</span>
+                <span>
+                  ⏱ {c.effort} ·{" "}
+                  <span className="font-semibold text-indigo-600 dark:text-indigo-300">
+                    +{baseXp(c.effort)} XP
+                  </span>
+                </span>
               </div>
             </Link>
           ))}
