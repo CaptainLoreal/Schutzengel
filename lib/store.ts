@@ -8,11 +8,27 @@ const KEY = "proofwork:v2";
 
 export type Role = "seeker" | "company";
 
+export interface Profile {
+  name: string;
+  headline: string;
+  location: string;
+  bio: string;
+  links: string[];
+}
+
+const DEFAULT_PROFILE: Profile = {
+  name: "You",
+  headline: "",
+  location: "",
+  bio: "",
+  links: [],
+};
+
 interface DB {
   submissions: Submission[];
   customChallenges: Challenge[];
   role: Role;
-  seekerName: string;
+  profile: Profile;
 }
 
 function freshDB(): DB {
@@ -20,7 +36,7 @@ function freshDB(): DB {
     submissions: SEED_SUBMISSIONS.map((s) => ({ ...s })),
     customChallenges: [],
     role: "seeker",
-    seekerName: "You",
+    profile: { ...DEFAULT_PROFILE },
   };
 }
 
@@ -38,7 +54,7 @@ export function loadDB(): DB {
       submissions: parsed.submissions ?? [],
       customChallenges: parsed.customChallenges ?? [],
       role: parsed.role ?? "seeker",
-      seekerName: parsed.seekerName ?? "You",
+      profile: { ...DEFAULT_PROFILE, ...(parsed.profile ?? {}) },
     };
   } catch {
     return freshDB();
@@ -71,7 +87,17 @@ export function setRole(role: Role) {
 }
 
 export function getSeekerName(): string {
-  return loadDB().seekerName;
+  return loadDB().profile.name || "You";
+}
+
+export function getProfile(): Profile {
+  return loadDB().profile;
+}
+
+export function setProfile(profile: Profile) {
+  const db = loadDB();
+  db.profile = profile;
+  saveDB(db);
 }
 
 export function addChallenge(c: Challenge) {
@@ -105,7 +131,7 @@ export function submissionsForChallenge(challengeId: string): Submission[] {
 export function mySubmissions(): Submission[] {
   const db = loadDB();
   return db.submissions
-    .filter((s) => s.seekerName === db.seekerName)
+    .filter((s) => s.seekerName === db.profile.name)
     .sort((a, b) => (a.submittedAt < b.submittedAt ? 1 : -1));
 }
 

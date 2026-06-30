@@ -85,17 +85,17 @@ export default function VideoRecorder({ onUsed }: { onUsed?: (used: boolean) => 
   }
 
   return (
-    <div className="rounded-xl border border-white/10 bg-white/[0.02] p-4">
+    <div className="rounded-xl border border-line bg-surface p-4">
       <div className="mb-1 flex items-center justify-between">
-        <h3 className="text-sm font-semibold text-slate-200">🎥 Record your presentation</h3>
-        <span className="text-xs text-slate-500">up to 4 min</span>
+        <h3 className="text-sm font-semibold text-fg">🎥 Record your presentation</h3>
+        <span className="text-xs text-faint">up to 4 min</span>
       </div>
-      <p className="mb-3 text-xs leading-relaxed text-slate-400">
+      <p className="mb-3 text-xs leading-relaxed text-muted">
         Present your recommendation on camera — this is the main event, the part companies actually
         watch. Selfie-style is fine.
       </p>
 
-      <div className="relative aspect-video w-full overflow-hidden rounded-lg bg-black/40 ring-1 ring-white/10">
+      <div className="relative aspect-video w-full overflow-hidden rounded-lg bg-black/70 ring-1 ring-line">
         <video
           ref={liveRef}
           muted
@@ -106,7 +106,7 @@ export default function VideoRecorder({ onUsed }: { onUsed?: (used: boolean) => 
           <video src={videoUrl} controls playsInline className="h-full w-full object-cover" />
         )}
         {!recording && !videoUrl && (
-          <div className="flex h-full w-full items-center justify-center text-sm text-slate-500">
+          <div className="flex h-full w-full items-center justify-center text-sm text-slate-400">
             No take yet
           </div>
         )}
@@ -118,20 +118,20 @@ export default function VideoRecorder({ onUsed }: { onUsed?: (used: boolean) => 
         )}
       </div>
 
-      {error && <p className="mt-2 text-xs text-rose-300">{error}</p>}
+      {error && <p className="mt-2 text-xs text-rose-600 dark:text-rose-300">{error}</p>}
 
       <div className="mt-3 flex flex-wrap items-center gap-2">
         {!recording ? (
           <button
             onClick={start}
-            className="rounded-lg bg-white/10 px-3 py-1.5 text-sm font-semibold text-white hover:bg-white/20"
+            className="rounded-lg bg-panel px-3 py-1.5 text-sm font-semibold text-fg hover:bg-panel-strong"
           >
             {videoUrl ? "Re-record" : "Start recording"}
           </button>
         ) : (
           <button
             onClick={stop}
-            className="rounded-lg bg-white/10 px-3 py-1.5 text-sm font-semibold text-white hover:bg-white/20"
+            className="rounded-lg bg-panel px-3 py-1.5 text-sm font-semibold text-fg hover:bg-panel-strong"
           >
             Stop
           </button>

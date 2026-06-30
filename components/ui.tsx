@@ -23,16 +23,16 @@ export function StatusBadge({ status }: { status: SubmissionStatus }) {
 
 export function Chip({ children }: { children: React.ReactNode }) {
   return (
-    <span className="inline-flex items-center rounded-md bg-white/[0.06] px-2 py-0.5 text-xs text-slate-300">
+    <span className="inline-flex items-center rounded-md bg-panel px-2 py-0.5 text-xs text-body">
       {children}
     </span>
   );
 }
 
 export function scoreColor(v: number): string {
-  if (v < 50) return "text-rose-400";
-  if (v < 75) return "text-amber-300";
-  return "text-emerald-400";
+  if (v < 50) return "text-rose-600 dark:text-rose-400";
+  if (v < 75) return "text-amber-600 dark:text-amber-300";
+  return "text-emerald-600 dark:text-emerald-400";
 }
 
 function barColor(v: number): string {
@@ -45,16 +45,16 @@ export function ScoreBar({ label, value, note }: { label: string; value: number;
   return (
     <div>
       <div className="mb-1 flex items-baseline justify-between gap-3 text-sm">
-        <span className="text-slate-300">{label}</span>
+        <span className="text-body">{label}</span>
         <span className={`font-semibold tabular-nums ${scoreColor(value)}`}>{value}</span>
       </div>
-      <div className="h-2 w-full overflow-hidden rounded-full bg-white/10">
+      <div className="h-2 w-full overflow-hidden rounded-full bg-panel">
         <div
           className={`h-full rounded-full ${barColor(value)} transition-all`}
           style={{ width: `${Math.max(0, Math.min(100, value))}%` }}
         />
       </div>
-      {note && <p className="mt-1 text-xs text-slate-500">{note}</p>}
+      {note && <p className="mt-1 text-xs text-faint">{note}</p>}
     </div>
   );
 }
@@ -68,7 +68,7 @@ export function ScoreRing({ value, size = 120 }: { value: number; size?: number 
   return (
     <div className="relative" style={{ height: size, width: size }}>
       <svg viewBox="0 0 120 120" className="-rotate-90" style={{ height: size, width: size }}>
-        <circle cx="60" cy="60" r={r} fill="none" stroke="rgba(255,255,255,0.08)" strokeWidth="10" />
+        <circle cx="60" cy="60" r={r} fill="none" stroke="var(--line)" strokeWidth="10" />
         <circle
           cx="60"
           cy="60"
@@ -83,16 +83,25 @@ export function ScoreRing({ value, size = 120 }: { value: number; size?: number 
       </svg>
       <div className="absolute inset-0 flex flex-col items-center justify-center">
         <span className={`text-3xl font-bold tabular-nums ${scoreColor(value)}`}>{value}</span>
-        <span className="text-[10px] uppercase tracking-widest text-slate-400">/ 100</span>
+        <span className="text-[10px] uppercase tracking-widest text-muted">/ 100</span>
       </div>
     </div>
   );
 }
 
 const REC_STYLES = {
-  advance: { label: "Advance", cls: "bg-emerald-500/15 text-emerald-300 ring-emerald-500/30" },
-  maybe: { label: "Maybe", cls: "bg-amber-500/15 text-amber-300 ring-amber-500/30" },
-  pass: { label: "Pass", cls: "bg-rose-500/15 text-rose-300 ring-rose-500/30" },
+  advance: {
+    label: "Advance",
+    cls: "bg-emerald-500/15 text-emerald-700 ring-emerald-500/30 dark:text-emerald-300",
+  },
+  maybe: {
+    label: "Maybe",
+    cls: "bg-amber-500/15 text-amber-700 ring-amber-500/30 dark:text-amber-300",
+  },
+  pass: {
+    label: "Pass",
+    cls: "bg-rose-500/15 text-rose-700 ring-rose-500/30 dark:text-rose-300",
+  },
 } as const;
 
 export function RecPill({ rec }: { rec: "advance" | "maybe" | "pass" }) {
@@ -108,6 +117,6 @@ export function RecPill({ rec }: { rec: "advance" | "maybe" | "pass" }) {
 
 export function Spinner() {
   return (
-    <span className="pa-spin inline-block h-4 w-4 rounded-full border-2 border-white/30 border-t-white" />
+    <span className="pa-spin inline-block h-4 w-4 rounded-full border-2 border-[color:var(--line)] border-t-[color:var(--fg)]" />
   );
 }

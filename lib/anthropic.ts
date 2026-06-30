@@ -2,8 +2,8 @@
 import Anthropic from "@anthropic-ai/sdk";
 
 // Per the Claude API reference, default to the latest, most capable model.
-// Override with PROOFWORK_MODEL=claude-sonnet-4-6 for cheaper/faster calls.
-export const MODEL = process.env.PROOFWORK_MODEL || "claude-opus-4-8";
+// Override with SCHUTZENGEL_MODEL=claude-sonnet-4-6 for cheaper/faster calls.
+export const MODEL = process.env.SCHUTZENGEL_MODEL || "claude-opus-4-8";
 
 export const hasApiKey = Boolean(process.env.ANTHROPIC_API_KEY);
 

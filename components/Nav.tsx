@@ -3,16 +3,19 @@
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import { getRole, setRole, type Role } from "@/lib/store";
+import { getRole, setRole, getSeekerName, type Role } from "@/lib/store";
+import ThemeToggle from "@/components/ThemeToggle";
 
 export default function Nav() {
   const pathname = usePathname();
   const router = useRouter();
   const [role, setRoleState] = useState<Role>("seeker");
   const [live, setLive] = useState<boolean | null>(null);
+  const [initial, setInitial] = useState("Y");
 
   useEffect(() => {
     setRoleState(getRole());
+    setInitial((getSeekerName()[0] || "Y").toUpperCase());
     fetch("/api/status")
       .then((r) => r.json())
       .then((d) => setLive(Boolean(d.live)))
@@ -28,21 +31,24 @@ export default function Nav() {
   const links =
     role === "seeker"
       ? [
-          { href: "/", label: "Challenges" },
+          { href: "/", label: "Cases" },
           { href: "/me", label: "My Work" },
         ]
       : [
           { href: "/company", label: "Console" },
-          { href: "/company/new", label: "Post a Challenge" },
+          { href: "/company/new", label: "Post a case" },
         ];
 
   return (
-    <header className="sticky top-0 z-20 border-b border-white/10 bg-[#080b11]/80 backdrop-blur">
+    <header
+      className="sticky top-0 z-20 border-b border-line backdrop-blur"
+      style={{ background: "var(--navbg)" }}
+    >
       <div className="mx-auto flex max-w-6xl items-center justify-between gap-3 px-5 py-3">
         <div className="flex items-center gap-5">
           <Link href={role === "seeker" ? "/" : "/company"} className="flex items-center gap-2">
             <span className="text-indigo-400">◆</span>
-            <span className="font-black tracking-tight">proofwork</span>
+            <span className="font-black tracking-tight text-fg">Schutzengel</span>
           </Link>
           <nav className="hidden gap-1 sm:flex">
             {links.map((l) => (
@@ -50,7 +56,7 @@ export default function Nav() {
                 key={l.href}
                 href={l.href}
                 className={`rounded-lg px-3 py-1.5 text-sm transition ${
-                  pathname === l.href ? "bg-white/10 text-white" : "text-slate-400 hover:text-white"
+                  pathname === l.href ? "bg-panel text-fg" : "text-muted hover:text-fg"
                 }`}
               >
                 {l.label}
@@ -58,25 +64,31 @@ export default function Nav() {
             ))}
           </nav>
         </div>
-        <div className="flex items-center gap-3">
+
+        <div className="flex items-center gap-2 sm:gap-3">
           {live !== null && (
             <span
               className={`hidden items-center gap-1.5 rounded-full px-2.5 py-1 text-xs ring-1 sm:inline-flex ${
                 live
-                  ? "bg-emerald-500/10 text-emerald-300 ring-emerald-500/30"
-                  : "bg-slate-500/10 text-slate-300 ring-slate-500/30"
+                  ? "bg-emerald-500/10 text-emerald-700 ring-emerald-500/30 dark:text-emerald-300"
+                  : "bg-panel text-muted ring-line"
               }`}
               title={live ? "AI assist is live" : "Set ANTHROPIC_API_KEY for live AI"}
             >
-              <span className={`h-1.5 w-1.5 rounded-full ${live ? "bg-emerald-400" : "bg-slate-400"}`} />
+              <span
+                className={`h-1.5 w-1.5 rounded-full ${live ? "bg-emerald-500" : "bg-slate-400"}`}
+              />
               {live ? "Live AI" : "Demo"}
             </span>
           )}
-          <div className="flex rounded-lg border border-white/10 p-0.5 text-xs font-semibold">
+
+          <ThemeToggle />
+
+          <div className="flex rounded-lg border border-line p-0.5 text-xs font-semibold">
             <button
               onClick={() => switchTo("seeker")}
               className={`rounded-md px-3 py-1.5 transition ${
-                role === "seeker" ? "bg-indigo-500 text-white" : "text-slate-400 hover:text-white"
+                role === "seeker" ? "bg-indigo-500 text-white" : "text-muted hover:text-fg"
               }`}
             >
               Seeker
@@ -84,12 +96,20 @@ export default function Nav() {
             <button
               onClick={() => switchTo("company")}
               className={`rounded-md px-3 py-1.5 transition ${
-                role === "company" ? "bg-indigo-500 text-white" : "text-slate-400 hover:text-white"
+                role === "company" ? "bg-indigo-500 text-white" : "text-muted hover:text-fg"
               }`}
             >
               Company
             </button>
           </div>
+
+          <Link
+            href="/profile"
+            title="Your profile"
+            className="grid h-8 w-8 place-items-center rounded-full bg-indigo-500/15 text-sm font-bold text-indigo-700 ring-1 ring-indigo-500/30 transition hover:ring-indigo-400/60 dark:text-indigo-300"
+          >
+            {initial}
+          </Link>
         </div>
       </div>
     </header>

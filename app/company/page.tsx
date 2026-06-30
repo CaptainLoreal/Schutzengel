@@ -47,7 +47,7 @@ export default function Console() {
       <div className="flex flex-wrap items-end justify-between gap-3">
         <div>
           <h1 className="text-3xl font-black tracking-tight">Vetting console</h1>
-          <p className="mt-1 text-slate-400">
+          <p className="mt-1 text-muted">
             Vet people by how they present their thinking — {subs.length} presentation
             {subs.length === 1 ? "" : "s"}, {toReview} to review.
           </p>
@@ -61,10 +61,10 @@ export default function Console() {
       </div>
 
       {!mounted ? (
-        <p className="mt-10 text-slate-500">Loading…</p>
+        <p className="mt-10 text-faint">Loading…</p>
       ) : withSubs.length === 0 ? (
-        <div className="mt-8 rounded-2xl border border-white/10 bg-white/[0.03] p-8 text-center text-slate-400">
-          No submissions yet. Switch to <span className="text-white">Seeker</span> and complete a
+        <div className="mt-8 rounded-2xl border border-line bg-surface p-8 text-center text-muted">
+          No submissions yet. Switch to <span className="text-fg">Seeker</span> and complete a
           challenge to see it flow into this console.
         </div>
       ) : (
@@ -75,7 +75,7 @@ export default function Console() {
               <div key={challenge.id}>
                 <div className="mb-2 flex items-center gap-2">
                   <FieldBadge field={challenge.field} />
-                  <h2 className="text-sm font-semibold text-slate-200">{challenge.title}</h2>
+                  <h2 className="text-sm font-semibold text-fg">{challenge.title}</h2>
                 </div>
                 <div className="space-y-1.5">
                   {items.map((s) => (
@@ -85,7 +85,7 @@ export default function Console() {
                       className={`flex w-full items-center justify-between rounded-xl border px-3 py-2.5 text-left transition ${
                         selectedId === s.id
                           ? "border-indigo-400/50 bg-indigo-500/10"
-                          : "border-white/10 bg-white/[0.02] hover:bg-white/[0.05]"
+                          : "border-line bg-surface hover:bg-panel"
                       }`}
                     >
                       <span className="flex items-center gap-2 text-sm">
@@ -94,7 +94,7 @@ export default function Console() {
                         </span>
                         {s.seekerName}
                         {s.aiEval && (
-                          <span className="text-xs text-slate-500">· AI {s.aiEval.overall}</span>
+                          <span className="text-xs text-faint">· AI {s.aiEval.overall}</span>
                         )}
                       </span>
                       <StatusBadge status={s.status} />
@@ -126,7 +126,7 @@ export default function Console() {
                 }}
               />
             ) : (
-              <div className="rounded-2xl border border-dashed border-white/15 p-10 text-center text-slate-500">
+              <div className="rounded-2xl border border-dashed border-line p-10 text-center text-faint">
                 Select a submission to review it.
               </div>
             )}
@@ -138,8 +138,8 @@ export default function Console() {
 }
 
 const DECISION_ACTIVE: Record<SubmissionStatus, string> = {
-  hired: "bg-emerald-500/20 text-emerald-200 ring-emerald-500/40",
-  shortlisted: "bg-indigo-500/20 text-indigo-200 ring-indigo-500/40",
+  hired: "bg-emerald-500/20 text-emerald-700 dark:text-emerald-200 ring-emerald-500/40",
+  shortlisted: "bg-indigo-500/20 text-indigo-700 dark:text-indigo-200 ring-indigo-500/40",
   passed: "bg-rose-500/20 text-rose-200 ring-rose-500/40",
   submitted: "",
   reviewing: "",
@@ -194,7 +194,7 @@ function ReviewPanel({
   ];
 
   return (
-    <div className="rounded-2xl border border-white/10 bg-white/[0.03] p-5">
+    <div className="rounded-2xl border border-line bg-surface p-5">
       <div className="flex items-start justify-between gap-3">
         <div>
           <div className="flex items-center gap-2">
@@ -203,7 +203,7 @@ function ReviewPanel({
             </span>
             <div>
               <p className="font-bold">{submission.seekerName}</p>
-              <p className="text-xs text-slate-500">
+              <p className="text-xs text-faint">
                 {new Date(submission.submittedAt).toLocaleString()}
               </p>
             </div>
@@ -213,22 +213,22 @@ function ReviewPanel({
       </div>
 
       {/* The work */}
-      <div className="mt-4 rounded-xl border border-white/10 bg-black/20 p-4">
+      <div className="mt-4 rounded-xl border border-line bg-input p-4">
         <div className="flex items-center justify-between gap-2">
-          <p className="text-xs uppercase tracking-widest text-slate-500">Key points</p>
+          <p className="text-xs uppercase tracking-widest text-faint">Key points</p>
           {submission.hasVideo ? (
-            <span className="inline-flex items-center gap-1.5 rounded-full bg-indigo-500/15 px-2.5 py-0.5 text-xs font-semibold text-indigo-300 ring-1 ring-indigo-500/30">
+            <span className="inline-flex items-center gap-1.5 rounded-full bg-indigo-500/15 px-2.5 py-0.5 text-xs font-semibold text-indigo-700 dark:text-indigo-300 ring-1 ring-indigo-500/30">
               🎥 Video presentation
             </span>
           ) : (
-            <span className="text-xs text-slate-500">No video attached</span>
+            <span className="text-xs text-faint">No video attached</span>
           )}
         </div>
-        <p className="mt-2 whitespace-pre-wrap text-sm text-slate-200">{submission.writeup}</p>
+        <p className="mt-2 whitespace-pre-wrap text-sm text-fg">{submission.writeup}</p>
         {submission.links.length > 0 && (
-          <div className="mt-3 border-t border-white/10 pt-2">
-            <p className="text-xs text-slate-500">Links</p>
-            <ul className="mt-1 space-y-0.5 text-sm text-indigo-300">
+          <div className="mt-3 border-t border-line pt-2">
+            <p className="text-xs text-faint">Links</p>
+            <ul className="mt-1 space-y-0.5 text-sm text-indigo-700 dark:text-indigo-300">
               {submission.links.map((l, i) => (
                 <li key={i} className="truncate">
                   {l}
@@ -244,13 +244,13 @@ function ReviewPanel({
         {!ev && !evaluating && (
           <button
             onClick={runEval}
-            className="flex w-full items-center justify-center gap-2 rounded-xl border border-indigo-400/40 bg-indigo-500/10 px-4 py-2.5 text-sm font-semibold text-indigo-200 hover:bg-indigo-500/20"
+            className="flex w-full items-center justify-center gap-2 rounded-xl border border-indigo-400/40 bg-indigo-500/10 px-4 py-2.5 text-sm font-semibold text-indigo-700 dark:text-indigo-200 hover:bg-indigo-500/20"
           >
             ✦ Run AI evaluation
           </button>
         )}
         {evaluating && (
-          <div className="flex items-center justify-center gap-2 rounded-xl border border-white/10 py-4 text-sm text-slate-400">
+          <div className="flex items-center justify-center gap-2 rounded-xl border border-line py-4 text-sm text-muted">
             <Spinner /> Evaluating against the brief…
           </div>
         )}
@@ -262,9 +262,9 @@ function ReviewPanel({
                 <div className="mb-1">
                   <RecPill rec={ev.recommendation} />
                 </div>
-                <p className="text-sm text-slate-300">{ev.fitSummary}</p>
+                <p className="text-sm text-body">{ev.fitSummary}</p>
                 {ev.demo && (
-                  <p className="mt-1 text-xs text-slate-500">
+                  <p className="mt-1 text-xs text-faint">
                     Demo grading — add an API key for real evaluation.
                   </p>
                 )}
@@ -279,16 +279,16 @@ function ReviewPanel({
 
             <div className="mt-4 grid grid-cols-1 gap-3 sm:grid-cols-2">
               <div>
-                <p className="text-xs font-semibold text-emerald-300">Strengths</p>
-                <ul className="mt-1 space-y-0.5 text-sm text-slate-300">
+                <p className="text-xs font-semibold text-emerald-700 dark:text-emerald-300">Strengths</p>
+                <ul className="mt-1 space-y-0.5 text-sm text-body">
                   {ev.strengths.map((s, i) => (
                     <li key={i}>· {s}</li>
                   ))}
                 </ul>
               </div>
               <div>
-                <p className="text-xs font-semibold text-amber-300">Concerns</p>
-                <ul className="mt-1 space-y-0.5 text-sm text-slate-300">
+                <p className="text-xs font-semibold text-amber-700 dark:text-amber-300">Concerns</p>
+                <ul className="mt-1 space-y-0.5 text-sm text-body">
                   {ev.concerns.map((s, i) => (
                     <li key={i}>· {s}</li>
                   ))}
@@ -301,7 +301,7 @@ function ReviewPanel({
 
       {/* Decision */}
       <div className="mt-4">
-        <p className="mb-2 text-xs uppercase tracking-widest text-slate-500">Decision</p>
+        <p className="mb-2 text-xs uppercase tracking-widest text-faint">Decision</p>
         <div className="flex flex-wrap gap-2">
           {decisions.map((d) => {
             const active = submission.status === d.s;
@@ -312,7 +312,7 @@ function ReviewPanel({
                 className={`rounded-lg px-4 py-2 text-sm font-semibold ring-1 transition ${
                   active
                     ? DECISION_ACTIVE[d.s]
-                    : "bg-white/[0.03] text-slate-300 ring-white/10 hover:bg-white/[0.07]"
+                    : "bg-surface text-body ring-line hover:bg-panel"
                 }`}
               >
                 {d.label}
@@ -324,7 +324,7 @@ function ReviewPanel({
 
       {/* Feedback to candidate */}
       <div className="mt-4">
-        <p className="mb-2 text-xs uppercase tracking-widest text-slate-500">
+        <p className="mb-2 text-xs uppercase tracking-widest text-faint">
           Feedback to candidate
         </p>
         <textarea
@@ -332,7 +332,7 @@ function ReviewPanel({
           onChange={(e) => setFeedbackText(e.target.value)}
           rows={3}
           placeholder="Optional note the candidate will see in My Work…"
-          className="scroll-thin w-full resize-none rounded-xl border border-white/10 bg-black/30 px-3 py-2 text-sm outline-none placeholder:text-slate-600 focus:border-indigo-400/50"
+          className="scroll-thin w-full resize-none rounded-xl border border-line bg-input px-3 py-2 text-sm outline-none placeholder:text-faint focus:border-indigo-400/50"
         />
         <button
           onClick={() => {
@@ -340,7 +340,7 @@ function ReviewPanel({
             setSavedFlash(true);
             setTimeout(() => setSavedFlash(false), 1500);
           }}
-          className="mt-2 rounded-lg bg-white/10 px-4 py-2 text-sm font-semibold hover:bg-white/20"
+          className="mt-2 rounded-lg bg-panel px-4 py-2 text-sm font-semibold hover:bg-panel-strong"
         >
           {savedFlash ? "Saved ✓" : "Save feedback"}
         </button>

@@ -55,7 +55,7 @@ export default function NewChallenge() {
         .slice(0, 30) || "challenge";
     const challenge: Challenge = {
       id: `${slug}-${Date.now().toString(36)}`,
-      company: { name: company.trim(), blurb: blurb.trim() || "Hiring on Proofwork." },
+      company: { name: company.trim(), blurb: blurb.trim() || "Hiring on Schutzengel." },
       title: title.trim(),
       field,
       summary: summary.trim() || brief.trim().slice(0, 90),
@@ -77,7 +77,7 @@ export default function NewChallenge() {
   return (
     <main className="mx-auto w-full max-w-2xl px-5 py-8">
       <h1 className="text-3xl font-black tracking-tight">Post a challenge</h1>
-      <p className="mt-1 text-slate-400">
+      <p className="mt-1 text-muted">
         Write a realistic BD case that mirrors real work. Candidates present their solution on video;
         you vet them by how they think.
       </p>
@@ -99,7 +99,7 @@ export default function NewChallenge() {
               className={inputCls}
             >
               {FIELDS.map((f) => (
-                <option key={f} value={f} className="bg-slate-900">
+                <option key={f} value={f}>
                   {f}
                 </option>
               ))}
@@ -127,8 +127,8 @@ export default function NewChallenge() {
 
         {/* AI draft helper */}
         <div className="rounded-xl border border-indigo-500/20 bg-indigo-500/[0.05] p-4">
-          <p className="text-sm font-semibold text-indigo-200">✦ Draft the brief with AI</p>
-          <p className="mt-1 text-xs text-slate-400">
+          <p className="text-sm font-semibold text-indigo-700 dark:text-indigo-200">✦ Draft the brief with AI</p>
+          <p className="mt-1 text-xs text-muted">
             Describe what you want to test; AI writes the brief, deliverables, and criteria.
           </p>
           <textarea
@@ -221,7 +221,7 @@ export default function NewChallenge() {
           </button>
           <button
             onClick={() => router.push("/company")}
-            className="rounded-xl border border-white/15 px-5 py-2.5 text-sm font-semibold text-slate-200 hover:bg-white/10"
+            className="rounded-xl border border-line px-5 py-2.5 text-sm font-semibold text-fg hover:bg-panel"
           >
             Cancel
           </button>
@@ -232,7 +232,7 @@ export default function NewChallenge() {
 }
 
 const inputCls =
-  "w-full rounded-xl border border-white/10 bg-black/30 px-3 py-2 text-sm outline-none placeholder:text-slate-600 focus:border-indigo-400/50";
+  "w-full rounded-xl border border-line bg-input px-3 py-2 text-sm outline-none placeholder:text-faint focus:border-indigo-400/50";
 
 function lines(s: string): string[] {
   return s
@@ -244,7 +244,7 @@ function lines(s: string): string[] {
 function Field_({ label, children }: { label: string; children: React.ReactNode }) {
   return (
     <label className="block">
-      <span className="mb-1 block text-xs uppercase tracking-widest text-slate-400">{label}</span>
+      <span className="mb-1 block text-xs uppercase tracking-widest text-muted">{label}</span>
       {children}
     </label>
   );

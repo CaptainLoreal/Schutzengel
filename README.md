@@ -1,4 +1,4 @@
-# ◆ Proofwork
+# ◆ Schutzengel
 
 **Crack real business-development cases and present your thinking on video — and get hired on how you actually think.**
 
@@ -41,7 +41,7 @@ npm install        # already done once
 npm run dev        # http://localhost:3000
 ```
 
-**Demo vs. live AI:** no key → heuristic grading (fully clickable). Live → copy `.env.example` to `.env.local`, add `ANTHROPIC_API_KEY`. Default model `claude-opus-4-8`; set `PROOFWORK_MODEL=claude-sonnet-4-6` for cheaper/faster calls.
+**Demo vs. live AI:** no key → heuristic grading (fully clickable). Live → copy `.env.example` to `.env.local`, add `ANTHROPIC_API_KEY`. Default model `claude-opus-4-8`; set `SCHUTZENGEL_MODEL=claude-sonnet-4-6` for cheaper/faster calls.
 
 ## Structure
 

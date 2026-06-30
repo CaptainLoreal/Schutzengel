@@ -68,13 +68,13 @@ export default function ChallengePage() {
   }
 
   if (!mounted) {
-    return <main className="mx-auto max-w-5xl px-5 py-10 text-slate-500">Loading…</main>;
+    return <main className="mx-auto max-w-5xl px-5 py-10 text-faint">Loading…</main>;
   }
   if (!challenge) {
     return (
       <main className="mx-auto max-w-md px-5 py-20 text-center">
         <p className="text-lg font-semibold">Case not found.</p>
-        <Link href="/" className="mt-3 inline-block text-indigo-300 hover:underline">
+        <Link href="/" className="mt-3 inline-block text-indigo-700 dark:text-indigo-300 hover:underline">
           ← Back to cases
         </Link>
       </main>
@@ -83,40 +83,40 @@ export default function ChallengePage() {
 
   return (
     <main className="mx-auto w-full max-w-5xl px-5 py-8">
-      <Link href="/" className="text-sm text-slate-400 hover:text-white">
+      <Link href="/" className="text-sm text-muted hover:text-fg">
         ← All cases
       </Link>
       <div className="mt-3 flex items-center gap-2">
         <FieldBadge field={challenge.field} />
-        <span className="text-xs text-slate-500">⏱ {challenge.effort}</span>
+        <span className="text-xs text-faint">⏱ {challenge.effort}</span>
       </div>
       <h1 className="mt-2 text-3xl font-black tracking-tight">{challenge.title}</h1>
-      <p className="text-sm text-slate-400">
+      <p className="text-sm text-muted">
         {challenge.company.name} — {challenge.company.blurb}
       </p>
 
       <div className="mt-6 grid grid-cols-1 gap-6 lg:grid-cols-[1fr_400px]">
         {/* The case */}
         <section className="space-y-5">
-          <div className="rounded-2xl border border-white/10 bg-white/[0.03] p-5">
-            <h2 className="text-xs uppercase tracking-widest text-slate-400">The case</h2>
-            <p className="mt-2 whitespace-pre-wrap text-slate-200">{challenge.brief}</p>
+          <div className="rounded-2xl border border-line bg-surface p-5">
+            <h2 className="text-xs uppercase tracking-widest text-muted">The case</h2>
+            <p className="mt-2 whitespace-pre-wrap text-fg">{challenge.brief}</p>
           </div>
-          <div className="rounded-2xl border border-white/10 bg-white/[0.03] p-5">
-            <h2 className="text-xs uppercase tracking-widest text-slate-400">What to present</h2>
-            <ul className="mt-2 space-y-1 text-sm text-slate-200">
+          <div className="rounded-2xl border border-line bg-surface p-5">
+            <h2 className="text-xs uppercase tracking-widest text-muted">What to present</h2>
+            <ul className="mt-2 space-y-1 text-sm text-fg">
               {challenge.deliverables.map((d, i) => (
                 <li key={i}>• {d}</li>
               ))}
             </ul>
           </div>
           <div className="flex flex-wrap items-center gap-2">
-            <span className="text-xs text-slate-500">Vetting for:</span>
+            <span className="text-xs text-faint">Vetting for:</span>
             {challenge.skillsVetted.map((s) => (
               <Chip key={s}>{s}</Chip>
             ))}
           </div>
-          <p className="text-xs text-slate-500">🏆 {challenge.reward}</p>
+          <p className="text-xs text-faint">🏆 {challenge.reward}</p>
         </section>
 
         {/* Submit panel — video first */}
@@ -125,20 +125,20 @@ export default function ChallengePage() {
             <SubmittedPanel feedback={feedback} onMyWork={() => router.push("/me")} />
           ) : already ? (
             <div className="rounded-2xl border border-emerald-500/20 bg-emerald-500/[0.06] p-5 text-center">
-              <p className="font-semibold text-emerald-300">
+              <p className="font-semibold text-emerald-700 dark:text-emerald-300">
                 ✓ You&apos;ve already presented on this case.
               </p>
               <Link
                 href="/me"
-                className="mt-3 inline-block rounded-lg bg-white/10 px-4 py-2 text-sm font-semibold hover:bg-white/20"
+                className="mt-3 inline-block rounded-lg bg-panel px-4 py-2 text-sm font-semibold hover:bg-panel-strong"
               >
                 View in My Work
               </Link>
             </div>
           ) : (
-            <div className="rounded-2xl border border-white/10 bg-white/[0.03] p-5">
+            <div className="rounded-2xl border border-line bg-surface p-5">
               <h2 className="font-bold">Present your solution</h2>
-              <p className="mt-1 text-xs text-slate-400">
+              <p className="mt-1 text-xs text-muted">
                 Record your recommendation, then add a few written key points.
               </p>
 
@@ -147,7 +147,7 @@ export default function ChallengePage() {
               </div>
 
               <label className="mt-4 block">
-                <span className="mb-1 block text-xs uppercase tracking-widest text-slate-400">
+                <span className="mb-1 block text-xs uppercase tracking-widest text-muted">
                   Key points of your recommendation
                 </span>
                 <textarea
@@ -155,7 +155,7 @@ export default function ChallengePage() {
                   onChange={(e) => setWriteup(e.target.value)}
                   rows={6}
                   placeholder="The headline of your recommendation + the reasoning behind it…"
-                  className="scroll-thin w-full resize-none rounded-xl border border-white/10 bg-black/30 px-3 py-2 text-sm outline-none placeholder:text-slate-600 focus:border-indigo-400/50"
+                  className="scroll-thin w-full resize-none rounded-xl border border-line bg-input px-3 py-2 text-sm outline-none placeholder:text-faint focus:border-indigo-400/50"
                 />
               </label>
 
@@ -163,7 +163,7 @@ export default function ChallengePage() {
                 value={links}
                 onChange={(e) => setLinks(e.target.value)}
                 placeholder="Links (deck, sheet, doc) — comma separated"
-                className="mt-2 w-full rounded-xl border border-white/10 bg-black/30 px-3 py-2 text-sm outline-none placeholder:text-slate-600 focus:border-indigo-400/50"
+                className="mt-2 w-full rounded-xl border border-line bg-input px-3 py-2 text-sm outline-none placeholder:text-faint focus:border-indigo-400/50"
               />
 
               <button
@@ -179,7 +179,7 @@ export default function ChallengePage() {
                   "Submit presentation"
                 )}
               </button>
-              <p className="mt-2 text-center text-xs text-slate-500">
+              <p className="mt-2 text-center text-xs text-faint">
                 {hasVideo
                   ? "Video attached. You'll get instant AI feedback."
                   : "Your video is the main event — companies watch it to vet you."}
@@ -200,38 +200,38 @@ function SubmittedPanel({
   onMyWork: () => void;
 }) {
   return (
-    <div className="rounded-2xl border border-white/10 bg-white/[0.03] p-5">
+    <div className="rounded-2xl border border-line bg-surface p-5">
       <div className="flex items-center gap-2">
-        <span className="grid h-8 w-8 place-items-center rounded-full bg-emerald-500/15 text-emerald-300">
+        <span className="grid h-8 w-8 place-items-center rounded-full bg-emerald-500/15 text-emerald-700 dark:text-emerald-300">
           ✓
         </span>
         <h2 className="font-bold">Presented!</h2>
       </div>
-      <p className="mt-2 text-sm text-slate-400">It&apos;s now in the company&apos;s review queue.</p>
+      <p className="mt-2 text-sm text-muted">It&apos;s now in the company&apos;s review queue.</p>
 
       {feedback ? (
         <div className="mt-4 rounded-xl border border-indigo-500/20 bg-indigo-500/[0.06] p-4">
           <div className="flex items-center justify-between">
-            <p className="text-xs font-semibold uppercase tracking-wide text-indigo-300">
+            <p className="text-xs font-semibold uppercase tracking-wide text-indigo-700 dark:text-indigo-300">
               Instant AI feedback
             </p>
             <span className={`text-lg font-bold ${scoreColor(feedback.overall)}`}>
               {feedback.overall}
             </span>
           </div>
-          <p className="mt-2 text-sm text-slate-300">{feedback.summary}</p>
+          <p className="mt-2 text-sm text-body">{feedback.summary}</p>
           <div className="mt-3 space-y-3">
             <div>
-              <p className="text-xs font-semibold text-emerald-300">Strengths</p>
-              <ul className="mt-1 space-y-0.5 text-sm text-slate-300">
+              <p className="text-xs font-semibold text-emerald-700 dark:text-emerald-300">Strengths</p>
+              <ul className="mt-1 space-y-0.5 text-sm text-body">
                 {feedback.strengths.map((s, i) => (
                   <li key={i}>· {s}</li>
                 ))}
               </ul>
             </div>
             <div>
-              <p className="text-xs font-semibold text-amber-300">To improve</p>
-              <ul className="mt-1 space-y-0.5 text-sm text-slate-300">
+              <p className="text-xs font-semibold text-amber-700 dark:text-amber-300">To improve</p>
+              <ul className="mt-1 space-y-0.5 text-sm text-body">
                 {feedback.improvements.map((s, i) => (
                   <li key={i}>· {s}</li>
                 ))}
@@ -240,14 +240,14 @@ function SubmittedPanel({
           </div>
         </div>
       ) : (
-        <p className="mt-4 flex items-center gap-2 text-sm text-slate-500">
+        <p className="mt-4 flex items-center gap-2 text-sm text-faint">
           <Spinner /> Getting your feedback…
         </p>
       )}
 
       <button
         onClick={onMyWork}
-        className="mt-4 w-full rounded-xl bg-white/10 px-4 py-2.5 text-sm font-semibold hover:bg-white/20"
+        className="mt-4 w-full rounded-xl bg-panel px-4 py-2.5 text-sm font-semibold hover:bg-panel-strong"
       >
         View in My Work
       </button>

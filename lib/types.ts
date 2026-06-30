@@ -1,4 +1,4 @@
-// Shared domain types for Proofwork — a business-development case platform
+// Shared domain types for Schutzengel — a business-development case platform
 // where you crack real cases and present your thinking on video.
 
 // The four BD case-type buckets (internally still named `Field`).
