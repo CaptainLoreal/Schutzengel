@@ -29,12 +29,30 @@ export interface Activity {
   lastActiveDay: string | null;
 }
 
+export interface CVEntry {
+  id: string;
+  title: string;
+  org: string;
+  period: string;
+  detail: string;
+}
+
+export interface CV {
+  summary: string;
+  experience: CVEntry[];
+  education: CVEntry[];
+  skills: string[];
+}
+
+const DEFAULT_CV: CV = { summary: "", experience: [], education: [], skills: [] };
+
 interface DB {
   submissions: Submission[];
   customChallenges: Challenge[];
   role: Role;
   profile: Profile;
   activity: Activity;
+  cv: CV;
 }
 
 function freshDB(): DB {
@@ -44,6 +62,7 @@ function freshDB(): DB {
     role: "seeker",
     profile: { ...DEFAULT_PROFILE },
     activity: { streak: 0, lastActiveDay: null },
+    cv: { ...DEFAULT_CV, experience: [], education: [], skills: [] },
   };
 }
 
@@ -65,6 +84,12 @@ export function loadDB(): DB {
       activity: {
         streak: parsed.activity?.streak ?? 0,
         lastActiveDay: parsed.activity?.lastActiveDay ?? null,
+      },
+      cv: {
+        summary: parsed.cv?.summary ?? "",
+        experience: parsed.cv?.experience ?? [],
+        education: parsed.cv?.education ?? [],
+        skills: parsed.cv?.skills ?? [],
       },
     };
   } catch {
@@ -108,6 +133,16 @@ export function getProfile(): Profile {
 export function setProfile(profile: Profile) {
   const db = loadDB();
   db.profile = profile;
+  saveDB(db);
+}
+
+export function getCV(): CV {
+  return loadDB().cv;
+}
+
+export function setCV(cv: CV) {
+  const db = loadDB();
+  db.cv = cv;
   saveDB(db);
 }
 
