@@ -12,6 +12,7 @@ import {
   type Role,
 } from "@/lib/store";
 import { totalXp, rankFor } from "@/lib/gamification";
+import Logo from "@/components/Logo";
 
 export default function Nav() {
   const pathname = usePathname();
@@ -58,8 +59,8 @@ export default function Nav() {
       <div className="mx-auto flex max-w-6xl items-center justify-between gap-3 px-5 py-3">
         <div className="flex items-center gap-5">
           <Link href={role === "seeker" ? "/" : "/company"} className="flex items-center gap-2">
-            <span className="text-clay-400">◆</span>
-            <span className="font-serif text-lg font-black tracking-tight text-fg">Schutzengel</span>
+            <Logo size={26} />
+            <span className="serif text-lg font-black tracking-tight text-fg">Schutzengel</span>
           </Link>
           <nav className="hidden gap-1 sm:flex">
             {links.map((l) => (

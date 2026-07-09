@@ -15,9 +15,6 @@
   --color-clay-700: #8a3c25;
   --color-clay-800: #6c2f1f;
   --color-clay-900: #4c2016;
-
-  --font-serif: "Iowan Old Style", "Palatino Linotype", Palatino, "Book Antiqua",
-    Georgia, ui-serif, serif;
 }
 
 /* Warm neutral palette (single light theme). */
@@ -62,14 +59,14 @@ body {
     Arial, sans-serif;
 }
 
-/* Serif headings for a warmer, editorial feel. */
-h1 {
-  font-family: var(--font-serif);
-  letter-spacing: -0.015em;
+/* Warm, round serif (Fraunces) for headings + wordmark, softened via SOFT axis. */
+h1,
+.serif {
+  font-family: var(--font-fraunces), Georgia, "Book Antiqua", serif;
+  font-variation-settings: "opsz" 40, "SOFT" 90, "WONK" 0;
 }
-
-.font-serif {
-  font-family: var(--font-serif);
+h1 {
+  letter-spacing: -0.01em;
 }
 
 .scroll-thin::-webkit-scrollbar {
