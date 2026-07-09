@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { TESTS, topDimension } from "@/lib/tests";
+import { TESTS, topDimension } from "@/lib/psychometrics";
 import { getTestResults, type TestResult } from "@/lib/store";
 
 export default function TestsPage() {
@@ -18,7 +18,7 @@ export default function TestsPage() {
 
   return (
     <main className="mx-auto w-full max-w-3xl px-5 py-8">
-      <h1 className="text-3xl font-black tracking-tight">Psychometric tests</h1>
+      <h1 className="text-3xl font-black tracking-tight">Psychometrics</h1>
       <p className="mt-1 text-muted">
         Quick, self-report tests that build a trait profile companies can see alongside your work.
         {mounted && ` ${done}/${TESTS.length} completed.`}
@@ -30,7 +30,7 @@ export default function TestsPage() {
           return (
             <Link
               key={t.id}
-              href={`/tests/${t.id}`}
+              href={`/psychometrics/${t.id}`}
               className="group flex flex-wrap items-center justify-between gap-3 rounded-2xl border border-line bg-surface p-5 transition hover:border-indigo-400/40 hover:bg-panel"
             >
               <div className="min-w-0">

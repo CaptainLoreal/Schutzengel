@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
-import { getTest, scoreTest, topDimension, LIKERT } from "@/lib/tests";
+import { getTest, scoreTest, topDimension, LIKERT } from "@/lib/psychometrics";
 import { saveTestResult, getTestResults, type TestResult } from "@/lib/store";
 import { ScoreBar } from "@/components/ui";
 
@@ -39,8 +39,8 @@ export default function TestRunner() {
     return (
       <main className="mx-auto max-w-md px-5 py-20 text-center">
         <p className="text-lg font-semibold">Test not found.</p>
-        <Link href="/tests" className="mt-3 inline-block text-indigo-700 hover:underline dark:text-indigo-300">
-          ← All tests
+        <Link href="/psychometrics" className="mt-3 inline-block text-indigo-700 hover:underline dark:text-indigo-300">
+          ← Psychometrics
         </Link>
       </main>
     );
@@ -75,8 +75,8 @@ export default function TestRunner() {
     const top = topDimension(result.scores);
     return (
       <main className="mx-auto w-full max-w-2xl px-5 py-8">
-        <Link href="/tests" className="text-sm text-muted hover:text-fg">
-          ← All tests
+        <Link href="/psychometrics" className="text-sm text-muted hover:text-fg">
+          ← Psychometrics
         </Link>
         <h1 className="mt-3 text-3xl font-black tracking-tight">{test.name} — results</h1>
         <p className="mt-1 text-muted">
@@ -106,8 +106,8 @@ export default function TestRunner() {
 
   return (
     <main className="mx-auto w-full max-w-2xl px-5 py-8">
-      <Link href="/tests" className="text-sm text-muted hover:text-fg">
-        ← All tests
+      <Link href="/psychometrics" className="text-sm text-muted hover:text-fg">
+        ← Psychometrics
       </Link>
       <h1 className="mt-3 text-3xl font-black tracking-tight">{test.name}</h1>
       <p className="mt-1 text-muted">{test.tagline}</p>

@@ -15,7 +15,7 @@ import {
   type TestResult,
 } from "@/lib/store";
 import { totalXp, rankFor, levelFor, badgesFor, type Badge } from "@/lib/gamification";
-import { TESTS, topDimension } from "@/lib/tests";
+import { TESTS, topDimension } from "@/lib/psychometrics";
 
 const LEADERBOARD_SEED = [
   { name: "Priya N.", xp: 1240 },
@@ -266,8 +266,8 @@ export default function ProfilePage() {
         <section>
           <div className="mb-2 flex items-center justify-between">
             <p className="text-xs uppercase tracking-widest text-faint">Psychometric profile</p>
-            <Link href="/tests" className="text-xs font-semibold text-indigo-600 hover:underline dark:text-indigo-300">
-              All tests
+            <Link href="/psychometrics" className="text-xs font-semibold text-indigo-600 hover:underline dark:text-indigo-300">
+              View all
             </Link>
           </div>
           <div className="space-y-2 rounded-2xl border border-line bg-surface p-5">
@@ -281,7 +281,7 @@ export default function ProfilePage() {
                       {t.info[topDimension(r.scores)]?.label ?? topDimension(r.scores)}
                     </span>
                   ) : (
-                    <Link href={`/tests/${t.id}`} className="text-indigo-600 hover:underline dark:text-indigo-300">
+                    <Link href={`/psychometrics/${t.id}`} className="text-indigo-600 hover:underline dark:text-indigo-300">
                       Take →
                     </Link>
                   )}

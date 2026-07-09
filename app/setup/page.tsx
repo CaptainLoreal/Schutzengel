@@ -201,8 +201,8 @@ export default function SetupWizard() {
               <p className="font-semibold text-indigo-700 dark:text-indigo-200">One more thing</p>
               <p className="mt-1 text-body">
                 Take a quick psychometric test so companies see how you think, not just what you pick.{" "}
-                <Link href="/tests" className="font-semibold text-indigo-600 hover:underline dark:text-indigo-300">
-                  Browse tests →
+                <Link href="/psychometrics" className="font-semibold text-indigo-600 hover:underline dark:text-indigo-300">
+                  Browse psychometrics →
                 </Link>
               </p>
             </div>
