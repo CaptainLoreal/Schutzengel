@@ -54,7 +54,7 @@ export default function Console() {
         </div>
         <Link
           href="/company/new"
-          className="rounded-xl bg-indigo-500 px-4 py-2 text-sm font-semibold text-white hover:bg-indigo-400"
+          className="rounded-xl bg-clay-500 px-4 py-2 text-sm font-semibold text-white hover:bg-clay-400"
         >
           + Post a challenge
         </Link>
@@ -84,7 +84,7 @@ export default function Console() {
                       onClick={() => setSelectedId(s.id)}
                       className={`flex w-full items-center justify-between rounded-xl border px-3 py-2.5 text-left transition ${
                         selectedId === s.id
-                          ? "border-indigo-400/50 bg-indigo-500/10"
+                          ? "border-clay-400/50 bg-clay-500/10"
                           : "border-line bg-surface hover:bg-panel"
                       }`}
                     >
@@ -139,7 +139,7 @@ export default function Console() {
 
 const DECISION_ACTIVE: Record<SubmissionStatus, string> = {
   hired: "bg-emerald-500/20 text-emerald-700 dark:text-emerald-200 ring-emerald-500/40",
-  shortlisted: "bg-indigo-500/20 text-indigo-700 dark:text-indigo-200 ring-indigo-500/40",
+  shortlisted: "bg-clay-500/20 text-clay-700 dark:text-clay-200 ring-clay-500/40",
   passed: "bg-rose-500/20 text-rose-200 ring-rose-500/40",
   submitted: "",
   reviewing: "",
@@ -217,7 +217,7 @@ function ReviewPanel({
         <div className="flex items-center justify-between gap-2">
           <p className="text-xs uppercase tracking-widest text-faint">Key points</p>
           {submission.hasVideo ? (
-            <span className="inline-flex items-center gap-1.5 rounded-full bg-indigo-500/15 px-2.5 py-0.5 text-xs font-semibold text-indigo-700 dark:text-indigo-300 ring-1 ring-indigo-500/30">
+            <span className="inline-flex items-center gap-1.5 rounded-full bg-clay-500/15 px-2.5 py-0.5 text-xs font-semibold text-clay-700 dark:text-clay-300 ring-1 ring-clay-500/30">
               🎥 Video presentation
             </span>
           ) : (
@@ -228,7 +228,7 @@ function ReviewPanel({
         {submission.links.length > 0 && (
           <div className="mt-3 border-t border-line pt-2">
             <p className="text-xs text-faint">Links</p>
-            <ul className="mt-1 space-y-0.5 text-sm text-indigo-700 dark:text-indigo-300">
+            <ul className="mt-1 space-y-0.5 text-sm text-clay-700 dark:text-clay-300">
               {submission.links.map((l, i) => (
                 <li key={i} className="truncate">
                   {l}
@@ -244,7 +244,7 @@ function ReviewPanel({
         {!ev && !evaluating && (
           <button
             onClick={runEval}
-            className="flex w-full items-center justify-center gap-2 rounded-xl border border-indigo-400/40 bg-indigo-500/10 px-4 py-2.5 text-sm font-semibold text-indigo-700 dark:text-indigo-200 hover:bg-indigo-500/20"
+            className="flex w-full items-center justify-center gap-2 rounded-xl border border-clay-400/40 bg-clay-500/10 px-4 py-2.5 text-sm font-semibold text-clay-700 dark:text-clay-200 hover:bg-clay-500/20"
           >
             ✦ Run AI evaluation
           </button>
@@ -255,7 +255,7 @@ function ReviewPanel({
           </div>
         )}
         {ev && (
-          <div className="rounded-xl border border-indigo-500/20 bg-indigo-500/[0.05] p-4">
+          <div className="rounded-xl border border-clay-500/20 bg-clay-500/[0.05] p-4">
             <div className="flex items-center gap-4">
               <ScoreRing value={ev.overall} size={92} />
               <div className="min-w-0">
@@ -332,7 +332,7 @@ function ReviewPanel({
           onChange={(e) => setFeedbackText(e.target.value)}
           rows={3}
           placeholder="Optional note the candidate will see in My Work…"
-          className="scroll-thin w-full resize-none rounded-xl border border-line bg-input px-3 py-2 text-sm outline-none placeholder:text-faint focus:border-indigo-400/50"
+          className="scroll-thin w-full resize-none rounded-xl border border-line bg-input px-3 py-2 text-sm outline-none placeholder:text-faint focus:border-clay-400/50"
         />
         <button
           onClick={() => {

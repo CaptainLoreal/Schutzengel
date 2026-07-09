@@ -39,17 +39,17 @@ export default function Feed() {
       {!setupDone && (
         <Link
           href="/setup"
-          className="mt-5 flex items-center justify-between gap-3 rounded-2xl border border-indigo-500/30 bg-indigo-500/[0.08] p-4"
+          className="mt-5 flex items-center justify-between gap-3 rounded-2xl border border-clay-500/30 bg-clay-500/[0.08] p-4"
         >
           <div>
-            <p className="font-semibold text-indigo-700 dark:text-indigo-200">
+            <p className="font-semibold text-clay-700 dark:text-clay-200">
               👋 New here? Set up your profile
             </p>
             <p className="text-sm text-muted">
               A 2-minute wizard: your strengths, interests, and the work you want.
             </p>
           </div>
-          <span className="shrink-0 rounded-lg bg-indigo-500 px-4 py-2 text-sm font-semibold text-white">
+          <span className="shrink-0 rounded-lg bg-clay-500 px-4 py-2 text-sm font-semibold text-white">
             Start setup →
           </span>
         </Link>
@@ -79,7 +79,7 @@ export default function Feed() {
             <Link
               key={c.id}
               href={`/challenge/${c.id}`}
-              className="group flex flex-col rounded-2xl border border-line bg-surface p-5 transition hover:border-indigo-400/40 hover:bg-panel"
+              className="group flex flex-col rounded-2xl border border-line bg-surface p-5 transition hover:border-clay-400/40 hover:bg-panel"
             >
               <div className="flex items-center justify-between">
                 <FieldBadge field={c.field} />
@@ -98,7 +98,7 @@ export default function Feed() {
                 <span>{c.company.name}</span>
                 <span>
                   ⏱ {c.effort} ·{" "}
-                  <span className="font-semibold text-indigo-600 dark:text-indigo-300">
+                  <span className="font-semibold text-clay-600 dark:text-clay-300">
                     +{baseXp(c.effort)} XP
                   </span>
                 </span>

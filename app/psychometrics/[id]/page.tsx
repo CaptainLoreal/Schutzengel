@@ -39,7 +39,7 @@ export default function TestRunner() {
     return (
       <main className="mx-auto max-w-md px-5 py-20 text-center">
         <p className="text-lg font-semibold">Test not found.</p>
-        <Link href="/psychometrics" className="mt-3 inline-block text-indigo-700 hover:underline dark:text-indigo-300">
+        <Link href="/psychometrics" className="mt-3 inline-block text-clay-700 hover:underline dark:text-clay-300">
           ← Psychometrics
         </Link>
       </main>
@@ -96,7 +96,7 @@ export default function TestRunner() {
           >
             Retake
           </button>
-          <Link href="/profile" className="rounded-xl bg-indigo-500 px-5 py-2.5 text-sm font-semibold text-white hover:bg-indigo-400">
+          <Link href="/profile" className="rounded-xl bg-clay-500 px-5 py-2.5 text-sm font-semibold text-white hover:bg-clay-400">
             See it on your profile
           </Link>
         </div>
@@ -122,7 +122,7 @@ export default function TestRunner() {
         </div>
         <div className="mt-2 h-1.5 w-full overflow-hidden rounded-full bg-panel">
           <div
-            className="h-full rounded-full bg-indigo-500 transition-all"
+            className="h-full rounded-full bg-clay-500 transition-all"
             style={{ width: `${(answered / test.questions.length) * 100}%` }}
           />
         </div>
@@ -141,7 +141,7 @@ export default function TestRunner() {
                   aria-label={LIKERT[v - 1]}
                   className={`grid h-9 w-9 place-items-center rounded-full text-sm font-bold ring-1 transition ${
                     answers[qi] === v
-                      ? "bg-indigo-500 text-white ring-indigo-500"
+                      ? "bg-clay-500 text-white ring-clay-500"
                       : "bg-panel text-muted ring-line hover:text-fg"
                   }`}
                 >
@@ -161,7 +161,7 @@ export default function TestRunner() {
         <button
           onClick={submit}
           disabled={!allAnswered}
-          className="w-full rounded-xl bg-indigo-500 px-5 py-3 text-sm font-semibold text-white shadow-lg hover:bg-indigo-400 disabled:opacity-40"
+          className="w-full rounded-xl bg-clay-500 px-5 py-3 text-sm font-semibold text-white shadow-lg hover:bg-clay-400 disabled:opacity-40"
         >
           {allAnswered ? "See my results" : `Answer all ${test.questions.length} to continue`}
         </button>

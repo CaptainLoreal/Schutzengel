@@ -89,7 +89,7 @@ export default function ChallengePage() {
     return (
       <main className="mx-auto max-w-md px-5 py-20 text-center">
         <p className="text-lg font-semibold">Case not found.</p>
-        <Link href="/" className="mt-3 inline-block text-indigo-700 dark:text-indigo-300 hover:underline">
+        <Link href="/" className="mt-3 inline-block text-clay-700 dark:text-clay-300 hover:underline">
           ← Back to cases
         </Link>
       </main>
@@ -175,7 +175,7 @@ export default function ChallengePage() {
                   onChange={(e) => setWriteup(e.target.value)}
                   rows={6}
                   placeholder="The headline of your recommendation + the reasoning behind it…"
-                  className="scroll-thin w-full resize-none rounded-xl border border-line bg-input px-3 py-2 text-sm outline-none placeholder:text-faint focus:border-indigo-400/50"
+                  className="scroll-thin w-full resize-none rounded-xl border border-line bg-input px-3 py-2 text-sm outline-none placeholder:text-faint focus:border-clay-400/50"
                 />
               </label>
 
@@ -183,13 +183,13 @@ export default function ChallengePage() {
                 value={links}
                 onChange={(e) => setLinks(e.target.value)}
                 placeholder="Links (deck, sheet, doc) — comma separated"
-                className="mt-2 w-full rounded-xl border border-line bg-input px-3 py-2 text-sm outline-none placeholder:text-faint focus:border-indigo-400/50"
+                className="mt-2 w-full rounded-xl border border-line bg-input px-3 py-2 text-sm outline-none placeholder:text-faint focus:border-clay-400/50"
               />
 
               <button
                 onClick={submit}
                 disabled={!writeup.trim() || submitting}
-                className="mt-4 flex w-full items-center justify-center gap-2 rounded-xl bg-indigo-500 px-4 py-2.5 text-sm font-semibold text-white hover:bg-indigo-400 disabled:opacity-40"
+                className="mt-4 flex w-full items-center justify-center gap-2 rounded-xl bg-clay-500 px-4 py-2.5 text-sm font-semibold text-white hover:bg-clay-400 disabled:opacity-40"
               >
                 {submitting ? (
                   <>
@@ -234,7 +234,7 @@ function SubmittedPanel({
       <p className="mt-2 text-sm text-muted">It&apos;s now in the company&apos;s review queue.</p>
 
       <div className="mt-3 flex flex-wrap items-center gap-2">
-        <span className="rounded-full bg-indigo-500/15 px-3 py-1 text-sm font-bold text-indigo-700 ring-1 ring-indigo-500/30 dark:text-indigo-300">
+        <span className="rounded-full bg-clay-500/15 px-3 py-1 text-sm font-bold text-clay-700 ring-1 ring-clay-500/30 dark:text-clay-300">
           +{xpEarned} XP
         </span>
         {unlocked.map((b) => (
@@ -248,9 +248,9 @@ function SubmittedPanel({
       </div>
 
       {feedback ? (
-        <div className="mt-4 rounded-xl border border-indigo-500/20 bg-indigo-500/[0.06] p-4">
+        <div className="mt-4 rounded-xl border border-clay-500/20 bg-clay-500/[0.06] p-4">
           <div className="flex items-center justify-between">
-            <p className="text-xs font-semibold uppercase tracking-wide text-indigo-700 dark:text-indigo-300">
+            <p className="text-xs font-semibold uppercase tracking-wide text-clay-700 dark:text-clay-300">
               Instant AI feedback
             </p>
             <span className={`text-lg font-bold ${scoreColor(feedback.overall)}`}>

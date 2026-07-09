@@ -123,13 +123,13 @@ export default function CVPage() {
           <div className="flex rounded-lg border border-line p-0.5 text-xs font-semibold">
             <button
               onClick={() => setMode("edit")}
-              className={`rounded-md px-3 py-1.5 transition ${mode === "edit" ? "bg-indigo-500 text-white" : "text-muted hover:text-fg"}`}
+              className={`rounded-md px-3 py-1.5 transition ${mode === "edit" ? "bg-clay-500 text-white" : "text-muted hover:text-fg"}`}
             >
               Edit
             </button>
             <button
               onClick={() => setMode("preview")}
-              className={`rounded-md px-3 py-1.5 transition ${mode === "preview" ? "bg-indigo-500 text-white" : "text-muted hover:text-fg"}`}
+              className={`rounded-md px-3 py-1.5 transition ${mode === "preview" ? "bg-clay-500 text-white" : "text-muted hover:text-fg"}`}
             >
               Preview
             </button>
@@ -144,7 +144,7 @@ export default function CVPage() {
           )}
           <button
             onClick={save}
-            className="rounded-lg bg-indigo-500 px-4 py-1.5 text-sm font-semibold text-white hover:bg-indigo-400"
+            className="rounded-lg bg-clay-500 px-4 py-1.5 text-sm font-semibold text-white hover:bg-clay-400"
           >
             {saved ? "Saved ✓" : "Save"}
           </button>
@@ -161,7 +161,7 @@ export default function CVPage() {
         </div>
         <div className="mt-2 h-2 w-full overflow-hidden rounded-full bg-panel">
           <div
-            className="h-full rounded-full bg-gradient-to-r from-indigo-500 to-emerald-400 transition-all"
+            className="h-full rounded-full bg-gradient-to-r from-clay-500 to-emerald-400 transition-all"
             style={{ width: `${pct}%` }}
           />
         </div>
@@ -178,7 +178,7 @@ export default function CVPage() {
             </div>
             <p className="mt-2 text-xs text-faint">
               Name, headline & location come from your{" "}
-              <Link href="/profile" className="font-semibold text-indigo-600 hover:underline dark:text-indigo-300">profile</Link>.
+              <Link href="/profile" className="font-semibold text-clay-600 hover:underline dark:text-clay-300">profile</Link>.
             </p>
           </Block>
 
@@ -189,7 +189,7 @@ export default function CVPage() {
               <button
                 onClick={polishSummary}
                 disabled={!cv.summary.trim() || polishing}
-                className="flex items-center gap-1.5 rounded-lg border border-indigo-400/40 bg-indigo-500/10 px-2.5 py-1 text-xs font-semibold text-indigo-700 hover:bg-indigo-500/20 disabled:opacity-40 dark:text-indigo-200"
+                className="flex items-center gap-1.5 rounded-lg border border-clay-400/40 bg-clay-500/10 px-2.5 py-1 text-xs font-semibold text-clay-700 hover:bg-clay-500/20 disabled:opacity-40 dark:text-clay-200"
               >
                 {polishing ? <Spinner /> : "✦"} Polish with AI
               </button>
@@ -262,7 +262,7 @@ export default function CVPage() {
             {subs.length === 0 ? (
               <p className="text-sm text-faint">
                 Complete a case and it appears here automatically.{" "}
-                <Link href="/" className="font-semibold text-indigo-600 hover:underline dark:text-indigo-300">Browse cases →</Link>
+                <Link href="/" className="font-semibold text-clay-600 hover:underline dark:text-clay-300">Browse cases →</Link>
               </p>
             ) : (
               <ul className="space-y-1.5">
@@ -279,7 +279,7 @@ export default function CVPage() {
             )}
           </Block>
 
-          <button onClick={save} className="rounded-xl bg-indigo-500 px-5 py-2.5 text-sm font-semibold text-white hover:bg-indigo-400">
+          <button onClick={save} className="rounded-xl bg-clay-500 px-5 py-2.5 text-sm font-semibold text-white hover:bg-clay-400">
             {saved ? "Saved ✓" : "Save CV"}
           </button>
         </div>
@@ -292,7 +292,7 @@ export default function CVPage() {
 
 // ── Edit helpers ───────────────────────────────────────────────
 const inputCls =
-  "w-full rounded-xl border border-line bg-input px-3 py-2 text-sm text-fg outline-none placeholder:text-faint focus:border-indigo-400/50";
+  "w-full rounded-xl border border-line bg-input px-3 py-2 text-sm text-fg outline-none placeholder:text-faint focus:border-clay-400/50";
 
 function Block({ title, action, children }: { title: string; action?: React.ReactNode; children: React.ReactNode }) {
   return (

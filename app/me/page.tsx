@@ -39,7 +39,7 @@ export default function MyWork() {
           <p className="text-muted">You haven&apos;t completed a challenge yet.</p>
           <Link
             href="/"
-            className="mt-3 inline-block rounded-lg bg-indigo-500 px-4 py-2 text-sm font-semibold text-white hover:bg-indigo-400"
+            className="mt-3 inline-block rounded-lg bg-clay-500 px-4 py-2 text-sm font-semibold text-white hover:bg-clay-400"
           >
             Browse challenges
           </Link>
@@ -67,8 +67,8 @@ export default function MyWork() {
                   {s.writeup}
                 </p>
                 {s.companyFeedback && (
-                  <div className="mt-3 rounded-lg border border-indigo-500/20 bg-indigo-500/[0.06] p-3 text-sm">
-                    <p className="text-xs font-semibold uppercase tracking-wide text-indigo-700 dark:text-indigo-300">
+                  <div className="mt-3 rounded-lg border border-clay-500/20 bg-clay-500/[0.06] p-3 text-sm">
+                    <p className="text-xs font-semibold uppercase tracking-wide text-clay-700 dark:text-clay-300">
                       Company feedback
                     </p>
                     <p className="mt-1 text-body">{s.companyFeedback}</p>

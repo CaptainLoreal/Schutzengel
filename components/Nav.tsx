@@ -12,7 +12,6 @@ import {
   type Role,
 } from "@/lib/store";
 import { totalXp, rankFor } from "@/lib/gamification";
-import ThemeToggle from "@/components/ThemeToggle";
 
 export default function Nav() {
   const pathname = usePathname();
@@ -59,8 +58,8 @@ export default function Nav() {
       <div className="mx-auto flex max-w-6xl items-center justify-between gap-3 px-5 py-3">
         <div className="flex items-center gap-5">
           <Link href={role === "seeker" ? "/" : "/company"} className="flex items-center gap-2">
-            <span className="text-indigo-400">◆</span>
-            <span className="font-black tracking-tight text-fg">Schutzengel</span>
+            <span className="text-clay-400">◆</span>
+            <span className="font-serif text-lg font-black tracking-tight text-fg">Schutzengel</span>
           </Link>
           <nav className="hidden gap-1 sm:flex">
             {links.map((l) => (
@@ -97,18 +96,16 @@ export default function Nav() {
           <Link
             href="/profile"
             title="Your progress"
-            className="hidden items-center gap-1.5 rounded-full bg-indigo-500/10 px-2.5 py-1 text-xs font-semibold text-indigo-700 ring-1 ring-indigo-500/20 sm:inline-flex dark:text-indigo-300"
+            className="hidden items-center gap-1.5 rounded-full bg-clay-500/10 px-2.5 py-1 text-xs font-semibold text-clay-700 ring-1 ring-clay-500/20 sm:inline-flex dark:text-clay-300"
           >
             ★ {rankFor(xp).name} · {xp} XP
           </Link>
-
-          <ThemeToggle />
 
           <div className="flex rounded-lg border border-line p-0.5 text-xs font-semibold">
             <button
               onClick={() => switchTo("seeker")}
               className={`rounded-md px-3 py-1.5 transition ${
-                role === "seeker" ? "bg-indigo-500 text-white" : "text-muted hover:text-fg"
+                role === "seeker" ? "bg-clay-500 text-white" : "text-muted hover:text-fg"
               }`}
             >
               Seeker
@@ -116,7 +113,7 @@ export default function Nav() {
             <button
               onClick={() => switchTo("company")}
               className={`rounded-md px-3 py-1.5 transition ${
-                role === "company" ? "bg-indigo-500 text-white" : "text-muted hover:text-fg"
+                role === "company" ? "bg-clay-500 text-white" : "text-muted hover:text-fg"
               }`}
             >
               Company
@@ -126,7 +123,7 @@ export default function Nav() {
           <Link
             href="/profile"
             title="Your profile"
-            className="grid h-8 w-8 place-items-center rounded-full bg-indigo-500/15 text-sm font-bold text-indigo-700 ring-1 ring-indigo-500/30 transition hover:ring-indigo-400/60 dark:text-indigo-300"
+            className="grid h-8 w-8 place-items-center rounded-full bg-clay-500/15 text-sm font-bold text-clay-700 ring-1 ring-clay-500/30 transition hover:ring-clay-400/60 dark:text-clay-300"
           >
             {initial}
           </Link>

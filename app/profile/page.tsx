@@ -101,7 +101,7 @@ export default function ProfilePage() {
         <div className="flex flex-wrap items-end justify-between gap-4">
           <div>
             <p className="text-xs uppercase tracking-widest text-faint">Rank · Level {level}</p>
-            <p className="text-2xl font-black text-indigo-600 dark:text-indigo-300">{rank.name}</p>
+            <p className="text-2xl font-black text-clay-600 dark:text-clay-300">{rank.name}</p>
           </div>
           <div className="flex items-center gap-5">
             <div className="text-right">
@@ -119,7 +119,7 @@ export default function ProfilePage() {
         </div>
         <div className="mt-4 h-2.5 w-full overflow-hidden rounded-full bg-panel">
           <div
-            className="h-full rounded-full bg-gradient-to-r from-indigo-500 to-violet-400 transition-all"
+            className="h-full rounded-full bg-gradient-to-r from-clay-500 to-amber-400 transition-all"
             style={{ width: `${pct}%` }}
           />
         </div>
@@ -134,7 +134,7 @@ export default function ProfilePage() {
           <p className="mb-2 text-xs uppercase tracking-widest text-faint">How companies see you</p>
           <div className="rounded-2xl border border-line bg-surface p-5">
             <div className="flex items-center gap-3">
-              <span className="grid h-14 w-14 place-items-center rounded-full bg-indigo-500/15 text-xl font-bold text-indigo-700 ring-1 ring-indigo-500/30 dark:text-indigo-300">
+              <span className="grid h-14 w-14 place-items-center rounded-full bg-clay-500/15 text-xl font-bold text-clay-700 ring-1 ring-clay-500/30 dark:text-clay-300">
                 {initial}
               </span>
               <div className="min-w-0">
@@ -147,7 +147,7 @@ export default function ProfilePage() {
             {p.links.length > 0 && (
               <div className="mt-4 border-t border-line pt-3">
                 <p className="text-xs uppercase tracking-widest text-faint">Links</p>
-                <ul className="mt-1 space-y-0.5 text-sm text-indigo-700 dark:text-indigo-300">
+                <ul className="mt-1 space-y-0.5 text-sm text-clay-700 dark:text-clay-300">
                   {p.links.map((l, i) => (
                     <li key={i} className="truncate">
                       {l}
@@ -163,7 +163,7 @@ export default function ProfilePage() {
             </div>
             <Link
               href="/me"
-              className="mt-4 inline-block text-sm font-semibold text-indigo-600 hover:underline dark:text-indigo-300"
+              className="mt-4 inline-block text-sm font-semibold text-clay-600 hover:underline dark:text-clay-300"
             >
               View completed cases →
             </Link>
@@ -217,7 +217,7 @@ export default function ProfilePage() {
             </FieldRow>
             <button
               onClick={save}
-              className="rounded-xl bg-indigo-500 px-5 py-2.5 text-sm font-semibold text-white hover:bg-indigo-400"
+              className="rounded-xl bg-clay-500 px-5 py-2.5 text-sm font-semibold text-white hover:bg-clay-400"
             >
               {saved ? "Saved ✓" : "Save profile"}
             </button>
@@ -229,17 +229,17 @@ export default function ProfilePage() {
       {!prefs.setupComplete && (
         <Link
           href="/setup"
-          className="mt-6 flex items-center justify-between gap-3 rounded-2xl border border-indigo-500/30 bg-indigo-500/[0.08] p-4"
+          className="mt-6 flex items-center justify-between gap-3 rounded-2xl border border-clay-500/30 bg-clay-500/[0.08] p-4"
         >
           <div>
-            <p className="font-semibold text-indigo-700 dark:text-indigo-200">
+            <p className="font-semibold text-clay-700 dark:text-clay-200">
               Finish setting up your profile
             </p>
             <p className="text-sm text-muted">
               Tell us your strengths and interests so we can match you to the right cases.
             </p>
           </div>
-          <span className="shrink-0 rounded-lg bg-indigo-500 px-4 py-2 text-sm font-semibold text-white">
+          <span className="shrink-0 rounded-lg bg-clay-500 px-4 py-2 text-sm font-semibold text-white">
             Start →
           </span>
         </Link>
@@ -250,7 +250,7 @@ export default function ProfilePage() {
         <section>
           <div className="mb-2 flex items-center justify-between">
             <p className="text-xs uppercase tracking-widest text-faint">Strengths & interests</p>
-            <Link href="/setup" className="text-xs font-semibold text-indigo-600 hover:underline dark:text-indigo-300">
+            <Link href="/setup" className="text-xs font-semibold text-clay-600 hover:underline dark:text-clay-300">
               Edit
             </Link>
           </div>
@@ -266,7 +266,7 @@ export default function ProfilePage() {
         <section>
           <div className="mb-2 flex items-center justify-between">
             <p className="text-xs uppercase tracking-widest text-faint">Psychometric profile</p>
-            <Link href="/psychometrics" className="text-xs font-semibold text-indigo-600 hover:underline dark:text-indigo-300">
+            <Link href="/psychometrics" className="text-xs font-semibold text-clay-600 hover:underline dark:text-clay-300">
               View all
             </Link>
           </div>
@@ -281,7 +281,7 @@ export default function ProfilePage() {
                       {t.info[topDimension(r.scores)]?.label ?? topDimension(r.scores)}
                     </span>
                   ) : (
-                    <Link href={`/psychometrics/${t.id}`} className="text-indigo-600 hover:underline dark:text-indigo-300">
+                    <Link href={`/psychometrics/${t.id}`} className="text-clay-600 hover:underline dark:text-clay-300">
                       Take →
                     </Link>
                   )}
@@ -327,7 +327,7 @@ export default function ProfilePage() {
               <li
                 key={`${row.name}-${i}`}
                 className={`flex items-center justify-between rounded-lg px-3 py-2 text-sm ${
-                  "you" in row && row.you ? "bg-indigo-500/10 ring-1 ring-indigo-500/30" : ""
+                  "you" in row && row.you ? "bg-clay-500/10 ring-1 ring-clay-500/30" : ""
                 }`}
               >
                 <span className="flex items-center gap-3">
@@ -335,7 +335,7 @@ export default function ProfilePage() {
                   <span
                     className={
                       "you" in row && row.you
-                        ? "font-semibold text-indigo-700 dark:text-indigo-300"
+                        ? "font-semibold text-clay-700 dark:text-clay-300"
                         : "text-body"
                     }
                   >
@@ -353,7 +353,7 @@ export default function ProfilePage() {
 }
 
 const inputCls =
-  "w-full rounded-xl border border-line bg-input px-3 py-2 text-sm text-fg outline-none placeholder:text-faint focus:border-indigo-400/50";
+  "w-full rounded-xl border border-line bg-input px-3 py-2 text-sm text-fg outline-none placeholder:text-faint focus:border-clay-400/50";
 
 function TagRow({ label, items }: { label: string; items: string[] }) {
   return (

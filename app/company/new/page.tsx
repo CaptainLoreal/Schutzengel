@@ -126,8 +126,8 @@ export default function NewChallenge() {
         </Field_>
 
         {/* AI draft helper */}
-        <div className="rounded-xl border border-indigo-500/20 bg-indigo-500/[0.05] p-4">
-          <p className="text-sm font-semibold text-indigo-700 dark:text-indigo-200">✦ Draft the brief with AI</p>
+        <div className="rounded-xl border border-clay-500/20 bg-clay-500/[0.05] p-4">
+          <p className="text-sm font-semibold text-clay-700 dark:text-clay-200">✦ Draft the brief with AI</p>
           <p className="mt-1 text-xs text-muted">
             Describe what you want to test; AI writes the brief, deliverables, and criteria.
           </p>
@@ -141,7 +141,7 @@ export default function NewChallenge() {
           <button
             onClick={draft}
             disabled={!title.trim() || drafting}
-            className="mt-2 flex items-center justify-center gap-2 rounded-lg bg-indigo-500 px-4 py-2 text-sm font-semibold text-white hover:bg-indigo-400 disabled:opacity-40"
+            className="mt-2 flex items-center justify-center gap-2 rounded-lg bg-clay-500 px-4 py-2 text-sm font-semibold text-white hover:bg-clay-400 disabled:opacity-40"
           >
             {drafting ? (
               <>
@@ -215,7 +215,7 @@ export default function NewChallenge() {
           <button
             onClick={post}
             disabled={!canPost}
-            className="rounded-xl bg-indigo-500 px-5 py-2.5 text-sm font-semibold text-white hover:bg-indigo-400 disabled:opacity-40"
+            className="rounded-xl bg-clay-500 px-5 py-2.5 text-sm font-semibold text-white hover:bg-clay-400 disabled:opacity-40"
           >
             Publish challenge
           </button>
@@ -232,7 +232,7 @@ export default function NewChallenge() {
 }
 
 const inputCls =
-  "w-full rounded-xl border border-line bg-input px-3 py-2 text-sm outline-none placeholder:text-faint focus:border-indigo-400/50";
+  "w-full rounded-xl border border-line bg-input px-3 py-2 text-sm outline-none placeholder:text-faint focus:border-clay-400/50";
 
 function lines(s: string): string[] {
   return s

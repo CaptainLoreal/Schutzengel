@@ -31,7 +31,7 @@ export default function TestsPage() {
             <Link
               key={t.id}
               href={`/psychometrics/${t.id}`}
-              className="group flex flex-wrap items-center justify-between gap-3 rounded-2xl border border-line bg-surface p-5 transition hover:border-indigo-400/40 hover:bg-panel"
+              className="group flex flex-wrap items-center justify-between gap-3 rounded-2xl border border-line bg-surface p-5 transition hover:border-clay-400/40 hover:bg-panel"
             >
               <div className="min-w-0">
                 <div className="flex items-center gap-2">
@@ -48,7 +48,7 @@ export default function TestsPage() {
                   {mounted && r && ` · strongest: ${topDimension(r.scores)}`}
                 </p>
               </div>
-              <span className="shrink-0 text-sm font-semibold text-indigo-600 group-hover:underline dark:text-indigo-300">
+              <span className="shrink-0 text-sm font-semibold text-clay-600 group-hover:underline dark:text-clay-300">
                 {mounted && r ? "View / retake →" : "Take test →"}
               </span>
             </Link>
@@ -58,7 +58,7 @@ export default function TestsPage() {
 
       <p className="mt-6 text-xs text-faint">
         Your results appear on your{" "}
-        <Link href="/profile" className="font-semibold text-indigo-600 hover:underline dark:text-indigo-300">
+        <Link href="/profile" className="font-semibold text-clay-600 hover:underline dark:text-clay-300">
           profile
         </Link>
         . Self-report tests are indicative, not definitive.

@@ -111,7 +111,7 @@ export default function SetupWizard() {
       </div>
       <div className="mt-3 h-2 w-full overflow-hidden rounded-full bg-panel">
         <div
-          className="h-full rounded-full bg-gradient-to-r from-indigo-500 to-violet-400 transition-all"
+          className="h-full rounded-full bg-gradient-to-r from-clay-500 to-amber-400 transition-all"
           style={{ width: `${((step + 1) / STEPS.length) * 100}%` }}
         />
       </div>
@@ -197,11 +197,11 @@ export default function SetupWizard() {
             <Summary label="Industries" items={industries} />
             <Summary label="Roles" items={roles} />
             <Summary label="Open to" items={workTypes} />
-            <div className="rounded-xl border border-indigo-500/20 bg-indigo-500/[0.06] p-4 text-sm">
-              <p className="font-semibold text-indigo-700 dark:text-indigo-200">One more thing</p>
+            <div className="rounded-xl border border-clay-500/20 bg-clay-500/[0.06] p-4 text-sm">
+              <p className="font-semibold text-clay-700 dark:text-clay-200">One more thing</p>
               <p className="mt-1 text-body">
                 Take a quick psychometric test so companies see how you think, not just what you pick.{" "}
-                <Link href="/psychometrics" className="font-semibold text-indigo-600 hover:underline dark:text-indigo-300">
+                <Link href="/psychometrics" className="font-semibold text-clay-600 hover:underline dark:text-clay-300">
                   Browse psychometrics →
                 </Link>
               </p>
@@ -222,14 +222,14 @@ export default function SetupWizard() {
           <button
             onClick={() => setStep((s) => s + 1)}
             disabled={!canNext}
-            className="rounded-xl bg-indigo-500 px-6 py-2.5 text-sm font-semibold text-white hover:bg-indigo-400 disabled:opacity-40"
+            className="rounded-xl bg-clay-500 px-6 py-2.5 text-sm font-semibold text-white hover:bg-clay-400 disabled:opacity-40"
           >
             Continue
           </button>
         ) : (
           <button
             onClick={finish}
-            className="rounded-xl bg-indigo-500 px-6 py-2.5 text-sm font-semibold text-white hover:bg-indigo-400"
+            className="rounded-xl bg-clay-500 px-6 py-2.5 text-sm font-semibold text-white hover:bg-clay-400"
           >
             Finish setup
           </button>
@@ -240,7 +240,7 @@ export default function SetupWizard() {
 }
 
 const inputCls =
-  "w-full rounded-xl border border-line bg-input px-3 py-2 text-sm text-fg outline-none placeholder:text-faint focus:border-indigo-400/50";
+  "w-full rounded-xl border border-line bg-input px-3 py-2 text-sm text-fg outline-none placeholder:text-faint focus:border-clay-400/50";
 
 function StepHead({ title, sub }: { title: string; sub: string }) {
   return (
@@ -279,8 +279,8 @@ function ChipSelect({
             onClick={() => onToggle(o)}
             className={`rounded-full px-3 py-1.5 text-sm font-medium ring-1 transition ${
               on
-                ? "bg-indigo-500 text-white ring-indigo-500"
-                : "bg-surface text-body ring-line hover:border-indigo-400/40"
+                ? "bg-clay-500 text-white ring-clay-500"
+                : "bg-surface text-body ring-line hover:border-clay-400/40"
             }`}
           >
             {o}
