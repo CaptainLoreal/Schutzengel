@@ -2,7 +2,7 @@
 // the demo, so seeker submissions flow straight into the company console.
 import { SEED_CHALLENGES, challengeById } from "./challenges";
 import { SEED_SUBMISSIONS } from "./seed";
-import type { Challenge, Submission } from "./types";
+import type { Challenge, Field, Submission } from "./types";
 
 const KEY = "proofwork:v2";
 
@@ -77,6 +77,31 @@ const DEFAULT_CV: CV = {
   languages: [],
 };
 
+export interface Preferences {
+  strengths: string[];
+  industries: string[];
+  roles: string[];
+  caseTypes: Field[];
+  workTypes: string[];
+  setupComplete: boolean;
+}
+
+const DEFAULT_PREFERENCES: Preferences = {
+  strengths: [],
+  industries: [],
+  roles: [],
+  caseTypes: [],
+  workTypes: [],
+  setupComplete: false,
+};
+
+export interface TestResult {
+  testId: string;
+  answers: number[];
+  scores: { dimension: string; score: number }[];
+  takenAt: string;
+}
+
 interface DB {
   submissions: Submission[];
   customChallenges: Challenge[];
@@ -84,6 +109,8 @@ interface DB {
   profile: Profile;
   activity: Activity;
   cv: CV;
+  preferences: Preferences;
+  testResults: Record<string, TestResult>;
 }
 
 function freshDB(): DB {
@@ -102,6 +129,15 @@ function freshDB(): DB {
       certifications: [],
       languages: [],
     },
+    preferences: {
+      strengths: [],
+      industries: [],
+      roles: [],
+      caseTypes: [],
+      workTypes: [],
+      setupComplete: false,
+    },
+    testResults: {},
   };
 }
 
@@ -137,6 +173,15 @@ export function loadDB(): DB {
         certifications: parsed.cv?.certifications ?? [],
         languages: parsed.cv?.languages ?? [],
       },
+      preferences: {
+        strengths: parsed.preferences?.strengths ?? [],
+        industries: parsed.preferences?.industries ?? [],
+        roles: parsed.preferences?.roles ?? [],
+        caseTypes: parsed.preferences?.caseTypes ?? [],
+        workTypes: parsed.preferences?.workTypes ?? [],
+        setupComplete: parsed.preferences?.setupComplete ?? false,
+      },
+      testResults: parsed.testResults ?? {},
     };
   } catch {
     return freshDB();
@@ -189,6 +234,26 @@ export function getCV(): CV {
 export function setCV(cv: CV) {
   const db = loadDB();
   db.cv = cv;
+  saveDB(db);
+}
+
+export function getPreferences(): Preferences {
+  return loadDB().preferences;
+}
+
+export function setPreferences(preferences: Preferences) {
+  const db = loadDB();
+  db.preferences = preferences;
+  saveDB(db);
+}
+
+export function getTestResults(): Record<string, TestResult> {
+  return loadDB().testResults;
+}
+
+export function saveTestResult(result: TestResult) {
+  const db = loadDB();
+  db.testResults = { ...db.testResults, [result.testId]: result };
   saveDB(db);
 }
 

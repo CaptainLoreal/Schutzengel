@@ -44,6 +44,7 @@ export default function Nav() {
           { href: "/", label: "Cases" },
           { href: "/me", label: "My Work" },
           { href: "/cv", label: "CV" },
+          { href: "/tests", label: "Tests" },
         ]
       : [
           { href: "/company", label: "Console" },

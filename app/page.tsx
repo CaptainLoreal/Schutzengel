@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { allChallenges, mySubmissions } from "@/lib/store";
+import { allChallenges, mySubmissions, getPreferences } from "@/lib/store";
 import { FIELDS } from "@/lib/fields";
 import { FieldBadge, Chip } from "@/components/ui";
 import { baseXp } from "@/lib/gamification";
@@ -13,10 +13,12 @@ export default function Feed() {
   const [challenges, setChallenges] = useState<Challenge[]>([]);
   const [submittedIds, setSubmittedIds] = useState<Set<string>>(new Set());
   const [filter, setFilter] = useState<Field | "All">("All");
+  const [setupDone, setSetupDone] = useState(true);
 
   useEffect(() => {
     setChallenges(allChallenges());
     setSubmittedIds(new Set(mySubmissions().map((s) => s.challengeId)));
+    setSetupDone(getPreferences().setupComplete);
     setMounted(true);
   }, []);
 
@@ -33,6 +35,25 @@ export default function Feed() {
           present your thinking on camera, and get vetted on how you actually think.
         </p>
       </div>
+
+      {!setupDone && (
+        <Link
+          href="/setup"
+          className="mt-5 flex items-center justify-between gap-3 rounded-2xl border border-indigo-500/30 bg-indigo-500/[0.08] p-4"
+        >
+          <div>
+            <p className="font-semibold text-indigo-700 dark:text-indigo-200">
+              👋 New here? Set up your profile
+            </p>
+            <p className="text-sm text-muted">
+              A 2-minute wizard: your strengths, interests, and the work you want.
+            </p>
+          </div>
+          <span className="shrink-0 rounded-lg bg-indigo-500 px-4 py-2 text-sm font-semibold text-white">
+            Start setup →
+          </span>
+        </Link>
+      )}
 
       <div className="mt-6 flex flex-wrap gap-2">
         {(["All", ...FIELDS] as const).map((f) => (

@@ -8,9 +8,14 @@ import {
   mySubmissions,
   getChallenge,
   getStreak,
+  getPreferences,
+  getTestResults,
   type Profile,
+  type Preferences,
+  type TestResult,
 } from "@/lib/store";
 import { totalXp, rankFor, levelFor, badgesFor, type Badge } from "@/lib/gamification";
+import { TESTS, topDimension } from "@/lib/tests";
 
 const LEADERBOARD_SEED = [
   { name: "Priya N.", xp: 1240 },
@@ -29,6 +34,15 @@ export default function ProfilePage() {
   const [xp, setXp] = useState(0);
   const [streak, setStreak] = useState(0);
   const [badges, setBadges] = useState<Badge[]>([]);
+  const [prefs, setPrefs] = useState<Preferences>({
+    strengths: [],
+    industries: [],
+    roles: [],
+    caseTypes: [],
+    workTypes: [],
+    setupComplete: false,
+  });
+  const [testResults, setTestResults] = useState<Record<string, TestResult>>({});
 
   useEffect(() => {
     const prof = getProfile();
@@ -39,6 +53,8 @@ export default function ProfilePage() {
     setStreak(st);
     setXp(totalXp(subs, getChallenge));
     setBadges(badgesFor(subs, getChallenge, st));
+    setPrefs(getPreferences());
+    setTestResults(getTestResults());
     setStats({
       completed: subs.length,
       wins: subs.filter((s) => s.status === "hired" || s.status === "shortlisted").length,
@@ -209,6 +225,73 @@ export default function ProfilePage() {
         </section>
       </div>
 
+      {/* Setup nudge */}
+      {!prefs.setupComplete && (
+        <Link
+          href="/setup"
+          className="mt-6 flex items-center justify-between gap-3 rounded-2xl border border-indigo-500/30 bg-indigo-500/[0.08] p-4"
+        >
+          <div>
+            <p className="font-semibold text-indigo-700 dark:text-indigo-200">
+              Finish setting up your profile
+            </p>
+            <p className="text-sm text-muted">
+              Tell us your strengths and interests so we can match you to the right cases.
+            </p>
+          </div>
+          <span className="shrink-0 rounded-lg bg-indigo-500 px-4 py-2 text-sm font-semibold text-white">
+            Start →
+          </span>
+        </Link>
+      )}
+
+      {/* Interests + psychometrics */}
+      <div className="mt-6 grid grid-cols-1 gap-6 lg:grid-cols-2">
+        <section>
+          <div className="mb-2 flex items-center justify-between">
+            <p className="text-xs uppercase tracking-widest text-faint">Strengths & interests</p>
+            <Link href="/setup" className="text-xs font-semibold text-indigo-600 hover:underline dark:text-indigo-300">
+              Edit
+            </Link>
+          </div>
+          <div className="space-y-2.5 rounded-2xl border border-line bg-surface p-5">
+            <TagRow label="Strengths" items={prefs.strengths} />
+            <TagRow label="BD interests" items={prefs.caseTypes} />
+            <TagRow label="Industries" items={prefs.industries} />
+            <TagRow label="Roles" items={prefs.roles} />
+            <TagRow label="Open to" items={prefs.workTypes} />
+          </div>
+        </section>
+
+        <section>
+          <div className="mb-2 flex items-center justify-between">
+            <p className="text-xs uppercase tracking-widest text-faint">Psychometric profile</p>
+            <Link href="/tests" className="text-xs font-semibold text-indigo-600 hover:underline dark:text-indigo-300">
+              All tests
+            </Link>
+          </div>
+          <div className="space-y-2 rounded-2xl border border-line bg-surface p-5">
+            {TESTS.map((t) => {
+              const r = testResults[t.id];
+              return (
+                <div key={t.id} className="flex items-center justify-between text-sm">
+                  <span className="text-body">{t.name}</span>
+                  {r ? (
+                    <span className="font-semibold text-fg">
+                      {t.info[topDimension(r.scores)]?.label ?? topDimension(r.scores)}
+                    </span>
+                  ) : (
+                    <Link href={`/tests/${t.id}`} className="text-indigo-600 hover:underline dark:text-indigo-300">
+                      Take →
+                    </Link>
+                  )}
+                </div>
+              );
+            })}
+          </div>
+        </section>
+      </div>
+
       {/* Achievements */}
       <section className="mt-6">
         <h2 className="mb-3 text-sm font-semibold uppercase tracking-widest text-faint">
@@ -271,6 +354,23 @@ export default function ProfilePage() {
 
 const inputCls =
   "w-full rounded-xl border border-line bg-input px-3 py-2 text-sm text-fg outline-none placeholder:text-faint focus:border-indigo-400/50";
+
+function TagRow({ label, items }: { label: string; items: string[] }) {
+  return (
+    <div className="flex flex-wrap items-center gap-2">
+      <span className="w-24 shrink-0 text-xs uppercase tracking-widest text-faint">{label}</span>
+      {items.length ? (
+        items.map((i) => (
+          <span key={i} className="rounded-md bg-panel px-2 py-0.5 text-xs text-body">
+            {i}
+          </span>
+        ))
+      ) : (
+        <span className="text-xs text-faint">—</span>
+      )}
+    </div>
+  );
+}
 
 function FieldRow({ label, children }: { label: string; children: React.ReactNode }) {
   return (
