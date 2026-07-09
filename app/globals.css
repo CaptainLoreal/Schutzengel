@@ -83,3 +83,23 @@ body {
 .pa-spin {
   animation: pa-spin 0.8s linear infinite;
 }
+
+/* Print: show only the CV document (#cv-doc). */
+@media print {
+  body * {
+    visibility: hidden;
+  }
+  #cv-doc,
+  #cv-doc * {
+    visibility: visible;
+  }
+  #cv-doc {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    padding: 0 !important;
+    border: none !important;
+    box-shadow: none !important;
+  }
+}

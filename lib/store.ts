@@ -33,18 +33,49 @@ export interface CVEntry {
   id: string;
   title: string;
   org: string;
+  location: string;
   period: string;
-  detail: string;
+  detail: string; // one achievement per line → rendered as bullets
+}
+
+export interface CVCredential {
+  id: string;
+  title: string;
+  issuer: string;
+  year: string;
+}
+
+export interface CVLanguage {
+  id: string;
+  name: string;
+  level: string;
+}
+
+export interface CVContact {
+  email: string;
+  phone: string;
+  website: string;
 }
 
 export interface CV {
   summary: string;
+  contact: CVContact;
+  skills: string[];
   experience: CVEntry[];
   education: CVEntry[];
-  skills: string[];
+  certifications: CVCredential[];
+  languages: CVLanguage[];
 }
 
-const DEFAULT_CV: CV = { summary: "", experience: [], education: [], skills: [] };
+const DEFAULT_CV: CV = {
+  summary: "",
+  contact: { email: "", phone: "", website: "" },
+  skills: [],
+  experience: [],
+  education: [],
+  certifications: [],
+  languages: [],
+};
 
 interface DB {
   submissions: Submission[];
@@ -62,7 +93,15 @@ function freshDB(): DB {
     role: "seeker",
     profile: { ...DEFAULT_PROFILE },
     activity: { streak: 0, lastActiveDay: null },
-    cv: { ...DEFAULT_CV, experience: [], education: [], skills: [] },
+    cv: {
+      summary: "",
+      contact: { email: "", phone: "", website: "" },
+      skills: [],
+      experience: [],
+      education: [],
+      certifications: [],
+      languages: [],
+    },
   };
 }
 
@@ -87,9 +126,16 @@ export function loadDB(): DB {
       },
       cv: {
         summary: parsed.cv?.summary ?? "",
+        contact: {
+          email: parsed.cv?.contact?.email ?? "",
+          phone: parsed.cv?.contact?.phone ?? "",
+          website: parsed.cv?.contact?.website ?? "",
+        },
+        skills: parsed.cv?.skills ?? [],
         experience: parsed.cv?.experience ?? [],
         education: parsed.cv?.education ?? [],
-        skills: parsed.cv?.skills ?? [],
+        certifications: parsed.cv?.certifications ?? [],
+        languages: parsed.cv?.languages ?? [],
       },
     };
   } catch {
